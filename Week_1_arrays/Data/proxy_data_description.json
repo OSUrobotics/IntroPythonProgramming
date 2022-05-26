@@ -1,0 +1,112 @@
+{
+  "Pick data file": "proxy_pick_data.csv",
+  "Result": {
+    "successful": 1,
+    "unsuccessful": 0,
+    "column": "last"
+  },
+  "Data channels": [
+    {
+      "name": "Wrist force",
+      "index_offset": 0,
+      "dimensions": 3,
+      "units": "N"
+    },
+    {
+      "name": "Wrist torque",
+      "index_offset": 3,
+      "dimensions": 3,
+      "units": "N.m"
+    },
+    {
+      "name": "IMU accel f1",
+      "index_offset": 6,
+      "dimensions": 3,
+      "units": "gravity units"
+    },
+    {
+      "name": "IMU accel f2",
+      "index_offset": 15,
+      "dimensions": 3,
+      "units": "gravity units"
+    },
+    {
+      "name": "IMU accel f3",
+      "index_offset": 24,
+      "dimensions": 3,
+      "units": "gravity units"
+    },
+    {
+      "name": "IMU velocity f1",
+      "index_offset": 9,
+      "dimensions": 3,
+      "units": "deg/sec"
+    },
+    {
+      "name": "IMU velocity f2",
+      "index_offset": 18,
+      "dimensions": 3,
+      "units": "deg/sec"
+    },
+    {
+      "name": "IMU velocity f3",
+      "index_offset": 27,
+      "dimensions": 3,
+      "units": "deg/sec"
+    },
+    {
+      "name": "Motor position f1",
+      "index_offset": 12,
+      "dimensions": 1,
+      "units": "radians"
+    },
+    {
+      "name": "Motor position f2",
+      "index_offset": 21,
+      "dimensions": 1,
+      "units": "radians"
+    },
+    {
+      "name": "Motor position f3",
+      "index_offset": 30,
+      "dimensions": 1,
+      "units": "radians"
+    },
+    {
+      "name": "Motor velocity f1",
+      "index_offset": 13,
+      "dimensions": 1,
+      "units": "rad/sec"
+    },
+    {
+      "name": "Motor velocity f2",
+      "index_offset": 22,
+      "dimensions": 1,
+      "units": "rad/sec"
+    },
+    {
+      "name": "Motor velocity f3",
+      "index_offset": 31,
+      "dimensions": 1,
+      "units": "rad/sec"
+    },
+    {
+      "name": "Motor effort f1",
+      "index_offset": 14,
+      "dimensions": 1,
+      "units": "amp"
+    },
+    {
+      "name": "Motor effort f2",
+      "index_offset": 23,
+      "dimensions": 1,
+      "units": "amp"
+    },
+    {
+      "name": "Motor effort f3",
+      "index_offset": 32,
+      "dimensions": 1,
+      "units": "amp"
+    }
+  ]
+}
