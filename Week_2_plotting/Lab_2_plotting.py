@@ -60,4 +60,8 @@ fig, axs = plt.subplots(nrows, ncols, figsize=(6, 4))
 #  call subplots again with 1 row and 2 columns
 
 # YOUR CODE HERE
+
+# This ensures that the titles are not inside the other plots
+fig.set_tight_layout(tight=True)
+
 plt.close()
