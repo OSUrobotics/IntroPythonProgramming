@@ -51,9 +51,11 @@ import json as json
 # YOUR CODE HERE
 pick_data = ...
 
-# Print out the number of rows in pick_data (should be 660)
+# Print out the number of rows in pick_data (should be 660) and the number of successful picks (355)
+#   Number of successful picks: The number of values in the last column that are 1 (use np.sum)
 # YOUR CODE HERE
 print(f"Number of picks: {}")
+print(f"Number of successful picks: {}")
 
 # The format of the spreadsheet data is given in Data/data_format.json. Open up the file using any text editor and
 #   look through it to see if it makes sense. Also open up proxy_pick_data.csv in a spread sheet editor and make

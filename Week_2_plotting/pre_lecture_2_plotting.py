@@ -13,7 +13,7 @@ import json as json
 # Read the data in
 #   Note the ../Week_1_arrays/ part in front - this tells the file manager to go up one directory, then
 #    into the Week_1_arrays directory, which is where the data is
-pick_data = np.loadtxt("../Week_1_arrays/Data/proxy_pick_data.csv", dtype="float", delimiter=",")
+pick_data = np.loadtxt("../Data/proxy_pick_data.csv", dtype="float", delimiter=",")
 
 # Reminder: You need to change the directory when reading in the pick data description, too
 # YOUR CODE HERE

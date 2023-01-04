@@ -11,7 +11,7 @@ import numpy as np
 # Create a 1x10 array of numbers that starts at 0, goes to 1, and is evenly spaced (linspace)
 my_linspace_array = None
 
-# Create a new array from the previous one by multiplying by 2 and adding 1 (NO for loops allowed)
+# TODO Create a new array from the previous one by multiplying by 2 and adding 1 (NO for loops allowed)
 ...
 
 # Create a 2x10 numpy array with the two arrays as the first and second row
@@ -26,7 +26,7 @@ my_new_matrix = None
 
 print(f"My matrix shape: {my_new_matrix.shape}, should be (2, size of linspace array)")
 
-# Now do the same thing again, but add padding by making the first column -1 and the last column 2
+# TODO Now do the same thing again, but add padding by making the first column -1 and the last column 2
 #   I.e, the new numpy array should be 2 x (size of linspace array + 2)
 my_new_padded_matrix = None
 
@@ -39,12 +39,12 @@ print(f"Size of my_new_matrix should be 2, 20, is {my_new_matrix.shape}")
 
 # -------------------------- min, max, etc on numpy arrays -----------
 
-# Calculate the mean, min, and max of the linspace array
+# TODO Calculate the mean, min, and max of the linspace array
 #  Answers are in the current print out
 # Change to printing out the answers using numpy mean, min, max
 print(f"From array: Mean: {0.5}, min: {0.0}, max: {1.0}")
 
-# Calculate the mean of each row of the matrix (without padding)
+# TODO Calculate the mean of each row of the matrix (without padding)
 #   Make sure this works no matter how many rows the matrix has...
 # There are two ways to do this; the first is to manually loop over the rows, calculate the mean, and assign it
 #   to the my_means array.
@@ -54,7 +54,7 @@ my_means = None
 print(f"My means: {my_means}, should be a 2x1 array, with 0.5, 2 in it (10 elements in linspace array)")
 
 # -------------------------- Boolean indexing on arrays -----------
-#  In the padded matrix set all of the values that are bigger than 1 to be -1
+#  TODO In the padded matrix set all of the values that are bigger than 1 to be -1
 #   Check: The max should now be 1
 my_clipped_matrix = None
 # Now count how many values in the clipped matrix are -1
@@ -63,7 +63,7 @@ count_minus_1 = 0
 
 print(f"Count: {count_minus_1}, should be 13 if linspace array size 10, 23 if linspace array size is 20")
 
-# Now count how many are between 0.1 and 0.5 (Note: () & () is how to combine two conditionals)
+# TODO Now count how many are between 0.1 and 0.5 (Note: () & () is how to combine two conditionals)
 #  If you get the following error:
 #    TypeError: ufunc 'bitwise_and' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''
 #  See the solutions below - you need parenthesis around the individual conditionals
@@ -124,7 +124,7 @@ print(f"Size of my_new_matrix should be 2, 20, is {my_new_matrix_from_zeros.shap
 # Calculate the mean, min, and max of the linspace array
 #  Answers are in the current print out
 print(f"Answers: Mean: {np.mean(my_linspace_array)}, min: {np.min(my_linspace_array)}, max: {np.max(my_linspace_array)}")
-# Change to printing out the answers using numpy mean, min, max
+# Change to printing out the answers using numpy mu, min, max
 print(f"From array: Mean: {0.5}, min: {0.0}, max: {1.0}")
 
 # Version 1 - make the array to put the values in first - note .shape[0] returns the number of rows
@@ -133,7 +133,7 @@ for r in range(0, my_new_matrix_from_zeros.shape[0]):
     my_means[r] = np.mean(my_new_matrix_from_zeros[r, :])
 print(f"My means v1: {my_means}")
 
-# Fancy vesion - by setting axis = 0 I'm telling numpy to calculate the mean over the first axis (rows)
+# Fancy vesion - by setting axis = 0 I'm telling numpy to calculate the mu over the first axis (rows)
 my_means_simple = np.mean(my_new_matrix_from_zeros, axis=0)
 print(f"My means v2: {my_means_simple}")
 

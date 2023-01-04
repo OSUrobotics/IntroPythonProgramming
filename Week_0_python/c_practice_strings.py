@@ -26,9 +26,9 @@ print(f"First variable is , value , second variable is , value ")
 # LO: Can do equations in format, newline (\n) and tab (\t)
 # Third version - modify one (or both) of the print statements below to produce:
 #   - do this with ONE print statement, using \n, and without creating new variables
-#   - hint mean is (x + y) / 2
+#   - hint mu is (x + y) / 2
 # Variables (x, y), values (3.79, 1.30e+10),
-# 	mean 6500000001.90
+# 	mu 6500000001.90
 
 # ------------------------------------------------------------------------------
 # Splitting up long strings into text and numbers
@@ -103,8 +103,8 @@ print("First variable is {}, value {:0.2f}, second variable is {}, value {:0.2e}
 print(f"First variable is {x_name}, value {x:0.2f}, second variable is {y_name}, value {y:0.2e}")
 
 print("Third version")
-print("Variables ({}, {}), values ({:0.2f}, {:0.2e}), \n\tmean {:0.2f}".format(x_name, y_name, x, y, (x + y) / 2))
-print(f"Variables ({x_name}, {y_name}), values ({x:0.2f}, {y:0.2e}), \n\tmean {((x + y) / 2):0.2f}")
+print("Variables ({}, {}), values ({:0.2f}, {:0.2e}), \n\tmu {:0.2f}".format(x_name, y_name, x, y, (x + y) / 2))
+print(f"Variables ({x_name}, {y_name}), values ({x:0.2f}, {y:0.2e}), \n\tmu {((x + y) / 2):0.2f}")
 
 # --------
 print("-"*20)

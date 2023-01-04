@@ -18,6 +18,7 @@ def make_stats_dict(in_list):
     my_dict = {}
 
     # Do some stats calculations, store in dictionary
+    # TODO: calculate min, max, mean, std and store them in the dictionary by name
     return my_dict
 
 # Now use the function
@@ -28,12 +29,12 @@ my_dict = make_stats_dict(my_array_of_random_numbers)
 print()
 
 ######### Dictionary to count number of characters
-# Create a single dictionary that has in it each letter and the number of times that letter appears in any of the strings
+# TODO Create a single dictionary that has in it each letter and the number of times that letter appears in any of the strings
 a_list_of_strings = ["Hello world", "Cat got your tongue?", "The merry fox jumped over the I forget"]
 my_count_char_dict = {}
 for s in a_list_of_strings:
     for c in s:
-        ... # Add character to dictionary, or increment count
+        ... # TODO Add character to dictionary, or increment count
 
 print(my_count_char_dict)
 

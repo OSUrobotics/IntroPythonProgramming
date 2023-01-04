@@ -21,10 +21,10 @@ import numpy as np
 #  back as much data as you want. We'll see more of that later; for this assignment we'll use the power of dictionaries
 #  to pass back "labeled" data.
 
-# Function 1 to fill in: Calculate stats when the input variable is a list
+# Function calc_stats_from_list, fill in: Calculate stats when the input variable is a list
 def calc_stats_from_list(in_list):
-    """ Calculate mean of positive numbers, mean of negatives numbers
-    Separate the list into positive and negative numbers. Calculate the mean of each. Return those means, along with
+    """ Calculate mu of positive numbers, mu of negatives numbers
+    Separate the list into positive and negative numbers. Calculate the mu of each. Return those means, along with
      how many positive/negative numbers there were
     @param in_list : any list type
     @return - A dictionary with the desired stats"""
@@ -33,6 +33,9 @@ def calc_stats_from_list(in_list):
     #  of the values in the same place and assigns a meaningful label (key) to them
     dict_ret_stats = {"Mean positive": 0, "Mean negative": 0, "Count positive": 0, "Count negative": 0}
 
+    # TODO:
+    #   Calculate the means and the counts and store them in the dictionary with the keys given above in dict_ret_stats
+    #   You'll need a for loop to go over the list and an if statement to separate into positive and negative
 # YOUR CODE HERE
     return dict_ret_stats
 
@@ -41,8 +44,8 @@ def calc_stats_from_list(in_list):
 #   NO if statements or for loops - do this all with numpy operations
 #     You might find "count_nonzero" useful
 def calc_stats_from_nparray(in_list):
-    """ Calculate mean of positive numbers, mean of negatives numbers
-    Separate the list into positive and negative numbers. Calculate the mean of each. Return those means, along with
+    """ Calculate mu of positive numbers, mu of negatives numbers
+    Separate the list into positive and negative numbers. Calculate the mu of each. Return those means, along with
      how many positive/negative numbers there were
     @param in_list : numpy array
     @return - A dictionary with the desired stats"""
@@ -51,6 +54,9 @@ def calc_stats_from_nparray(in_list):
     #  of the values in the same place and assigns a meaningful label (key) to them
     dict_ret_stats = {"Mean positive": 0, "Mean negative": 0, "Count positive": 0, "Count negative": 0}
 
+    # TODO
+    #   Calculate the means and the counts and store them in the dictionary with the keys given above in dict_ret_stats.
+    #   Do NOT use a for loop
 # YOUR CODE HERE
     return dict_ret_stats
 
@@ -111,24 +117,26 @@ def create_data(n_data=10, b_ret_numpy=True):
     return my_data
 
 
-# Check by comparing results against each other (doesn't guarantee it's right, but...)
-#  Try 10 times. We don't care what the iteration is so use _ to say "we don't need a variable"
-for _ in range(0, 10):
-    # Get some random data
-    test_data = create_data()
-    test_data_list = list(test_data)
+# This bit of code makes sure that the tests will only be run when you run this python file
+if __name__ == '__main__':
+    # Check by comparing results against each other (doesn't guarantee it's right, but...)
+    #  Try 10 times. We don't care what the iteration is so use _ to say "we don't need a variable"
+    for _ in range(0, 10):
+        # Get some random data
+        test_data = create_data()
+        test_data_list = list(test_data)
 
-    # Call the two functions - notice cast to a list type
-    res_list = calc_stats_from_list(test_data_list)
-    res_np = calc_stats_from_nparray(test_data)
+        # Call the two functions - notice cast to a list type
+        res_list = calc_stats_from_list(test_data_list)
+        res_np = calc_stats_from_nparray(test_data)
 
-    # For all four stored values...
-    for k, v in res_list.items():
-        # Use isclose instead of == because two of these are floating point values - and == never works with
-        #  floating point values
-        # Since we used the same keys (names) in the two different dictionaries, we can pass that key to the other
-        #   dictionary
-        if not np.isclose(res_np[k], v):
-            print(f"Returned different values {k}, {v} and {res_np[k]}")
+        # For all four stored values...
+        for k, v in res_list.items():
+            # Use isclose instead of == because two of these are floating point values - and == never works with
+            #  floating point values
+            # Since we used the same keys (names) in the two different dictionaries, we can pass that key to the other
+            #   dictionary
+            if not np.isclose(res_np[k], v):
+                print(f"Returned different values {k}, {v} and {res_np[k]}")
 
-    print("Done test")
+        print("Done test")

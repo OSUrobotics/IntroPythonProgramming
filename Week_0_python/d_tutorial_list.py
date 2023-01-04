@@ -41,7 +41,7 @@ print(my_list_advance)
 # Use case: You are iterating over something and want to add the items in one at a time
 #   Note that the for loop could be a lot more complicated, and include if statements
 my_list_add = []  # Empty list
-for i in range(0, 5):
+for i in range(10, 15):
     # Add in the string "item n"
     my_list_add.append("item " + str(i))
 # Add in a "done", just for fun
@@ -52,12 +52,12 @@ print(my_list_add)
 #   See list comprehension (that's the fancy name for this)
 #  Iterates over the for loop, and puts the stuff on the left in the list
 #    Identical to the above for loop, just in one line
-my_list_fancy_add = ["item " + str(i) for i in range(0, 5)]
+my_list_fancy_add = ["item " + str(i) for i in range(10, 15)]
 print(my_list_fancy_add)
 
 # OPTIONAL - you can even do if statements
 #  - in this case, if i is even, add the item
-my_list_fancy_add_with_if = ["item " + str(i) for i in range(0, 5) if i % 2 == 0]
+my_list_fancy_add_with_if = ["item " + str(i) for i in range(10, 15) if i % 2 == 0]
 print(my_list_fancy_add_with_if)
 
 # END OPTIONAL

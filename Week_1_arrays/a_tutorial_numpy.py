@@ -26,6 +26,7 @@
 #   the code) to have this visual cue that this function/operation came from numpy. It also prevents name conflicts -
 #   for example, if you accidentally name a variable "min" you won't "overwrite" numpy's min. Also, if you cut and
 #   paste your code somewhere else, it's easier to get it working without name conflicts.
+#  Note: If you're NOT doing this in jupyter Notebooks, you'll need to install the numpy library
 import numpy as np
 
 # If you use this import, then you don't need the np. in front. Saves typing, but it means that ALL of the names/
@@ -35,6 +36,8 @@ import numpy as np
 # If you want to do a mix of the above, but just bring in the variables/data structures that you need, you can
 #   use one of the following. If you're using a lot of numpy operations/variables than it can get annoying to have to
 #   include all of them, though
+# The difference between these two lines is whether the numpy array is named nparray or just array.
+#
 # from numpy import array as nparray
 # from numpy import array
 
@@ -68,6 +71,9 @@ file_name = "Data/proxy_test_grasp.csv"
 #   all possible parameters - all of which have default values, except the file name.
 #   Here, we override specific parameters (what type of data it is and what the delimiter is)
 data_from_csv = np.loadtxt(file_name, dtype="float", delimiter=",")
+print(f"Size of csv data {data_from_csv.shape}")
+print(f"First element: {data_from_csv[0, 0]}")
+print(f"Last element: {data_from_csv[-1, -1]}")
 
 print("Example 1: Data from a csv file")
 print(f"Data dimensions: {data_from_csv.shape}, total number of elements: {data_from_csv.size}")
@@ -82,6 +88,8 @@ print(my_list)
 print("List as numpy array, notice matrix format")
 print(data_from_list)
 print(f"Data dimensions: {data_from_list.shape}, total number of elements: {data_from_list.size}")
+print(f"First element: {data_from_list[0, 0]}")
+print(f"Last element: {data_from_list[-1, -1]}")
 
 # Example 3: Creating a "blank" array, either of zeros, ones, a range of numbers, or random numbers
 #  dtype is optional - you can set it to int for integers, bool for booleans, etc
@@ -92,12 +100,14 @@ print("Example 3: Zeros, ones, and random - making numpy arrays from scratch")
 #   it for one dimensional arrays, but you will for more than one - otherwise, you get a TypeError: data type not understood
 data_zeros = np.zeros([3, 5, 2], dtype=float)
 print(f"Number of dimensions: {data_zeros.ndim}, dimension sizes: {data_zeros.shape}, total number of elements: {data_zeros.size}")
+print(f"First element: {data_zeros[0, 0, 0]}")
 
 # Making an array of ones of the same size as data_from_list
 #  .shape contains the dimensions of the array - number of rows, columns, etc
 #  It is a tuple, so you can't change it
 data_ones = np.ones(data_from_csv.shape)
 print(f"Data dimensions: {data_ones.shape}, total number of elements: {data_ones.size}")
+print(f"First element: {data_ones[0, 0, 0]}")
 
 # Making an array of numbers starting and stopping at given values (linspace)
 #  15 numbers, starting at -1 and going to 1
@@ -117,7 +127,7 @@ print(data_random)
 #     All arrays in the equation have to have the same dimensions
 #  Concept 2: If statements are accomplished using boolean indexing [if statement]
 #     Using [] selects a part of the array - so the dimensions may be different
-#  Operations usually create new arrays.
+#  Mathematical operations usually create new arrays, boolean indexing does not (usually).
 
 # Simplest example - apply 2 * x + 1 to all elements of the array, and store in a new array
 data_new_csv = 2 * data_from_csv + 1
@@ -170,11 +180,11 @@ for c in range(0, data_from_csv.shape[1]):
     #          non_zero_data[r,c] = (non_zero_data[r,c] - shift) / std_column
     data_new_csv[non_zero_data_in_col, c] = (data_new_csv[non_zero_data_in_col, c] - mean_column) / std_column
 
-# Because we've normalized all the columns individually, the mean and standard deviation of the ENTIRE data
+# Because we've normalized all the columns individually, the mu and standard deviation of the ENTIRE data
 #  set should be close to 0, +=1
 print(f"Mean {np.mean(data_new_csv)} and std {np.std(data_new_csv)} for ALL data")
 
-# ... but is we ask for the mean, std for one row it is NOT
+# ... but is we ask for the mu, std for one row it is NOT
 print(f"Mean {np.mean(data_new_csv[0, :])} and std {np.std(data_new_csv[0, :])} for one row")
 
 
@@ -208,7 +218,7 @@ print(f"Correct matrix shape {my_correct_size_matrix.shape} and size {my_correct
 
 # This generates an error because the two matrices are different shapes (but same size)
 # generates ValueError: operands could not be broadcast together with shapes (3,6) (18,)
-# oops = my_orig_matrix + my_same_size_matrix
+# oops = my_orig_matrix + my_incorrect_size_matrix
 
 # This is even worse: this creates a 1x1 array set to the value 18:
 my_oops_matrix = np.array(my_orig_matrix.size)

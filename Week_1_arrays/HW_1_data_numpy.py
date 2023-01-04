@@ -53,7 +53,7 @@ pick_data_description["n_time_steps"] = ...
 #
 
 def get_stats_for_channel(data, channel_info, xyz_dim, n_total_dims):
-    """ Get the min, max, mean, sd for the given channel
+    """ Get the min, max, mu, sd for the given channel
     @param data - the numpy array from the csv file (pick_data)
     @param channel_info - a dictionary with the channel info, eg, Wrist torque (from the json file)
     @param xyz_dim - 0, 1, or 2 for x, y, z
@@ -93,7 +93,7 @@ print(ret_stats)
 #. for each item in data channels
 #.    Print the channel name
 #.    Get the stats m_stats = get_...
-#     print(f"  minimum: {my_stats['Min']}, maximum: {my_stats['Max']}, mean: {my_stats['Mean']}, SD: {my_stats['SD']}")
+#     print(f"  minimum: {my_stats['Min']}, maximum: {my_stats['Max']}, mu: {my_stats['Mean']}, SD: {my_stats['SD']}")
 
 # Step 3 - Now add in a second loop that loops over the number of dimensions in the channel
 #  You'll need to use a list plus an append to store the x, y, z dimensions
@@ -113,7 +113,7 @@ map_to_xyz = ['x', 'y', 'z']
 #.    for each dimension in channel
 #.       Get the stats m_stats = get_...
 #.       ... and store them in d["stats"]
-#        print(f"  minimum: {my_stats['Min']}, maximum: {my_stats['Max']}, mean: {my_stats['Mean']}, SD: {my_stats['SD']}")
+#        print(f"  minimum: {my_stats['Min']}, maximum: {my_stats['Max']}, mu: {my_stats['Mean']}, SD: {my_stats['SD']}")
 
 # Write the results back out to a text file you can read in a text editor
 # I'll write the data back out for you. If you've done the steps above correctly, the file "week1_student_results.json"
