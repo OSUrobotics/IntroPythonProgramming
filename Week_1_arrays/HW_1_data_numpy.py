@@ -178,7 +178,7 @@ print(f"Comparison result: {b_ret}")
 row_max_wrist_torque_z = ...
 
 # For comparing output
-my_res = get_row_with_max_peak(pick_data, data_channels[1], 2, pick_data_description["n_total_dims"])
+my_res = get_row_with_max_peak(pick_data[:, :-1], data_channels[1], 2, pick_data_description["n_total_dims"])
 row_max_wrist_torque_z = my_res[0]
 
 
@@ -265,3 +265,5 @@ plot_channel_row(axs[0, 0], ts, pick_data_reorg[row, 0:3, :], data_channels[0], 
 # ... and for wrist torque data
 plot_channel_row(axs[0, 1], ts, pick_data_reorg[row, 3:6, :], data_channels[1], which_row=row, pick_data_success_fail[row] == 1)
 
+
+plt.show(block=True)
