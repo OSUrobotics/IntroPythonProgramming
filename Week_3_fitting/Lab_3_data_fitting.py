@@ -76,7 +76,7 @@ for p in range(0, (n_rows // 2) * n_cols):
 
 for p in range(0, (n_rows // 2) * n_cols):
     r, c = 3 + p // n_cols, p % n_cols
-    axs[r, c].plot(ts, data_failed[p])
+    axs[r, c].plot(ts, data_wrist_force_failed[p])
 # YOUR CODE HERE
     axs[r, c].set_title(f"{ch_name} summed" + f" fail {p}", fontsize=10)
 

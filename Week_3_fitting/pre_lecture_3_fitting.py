@@ -4,7 +4,7 @@
 
 # It might be helpful to look at the instruction/background slides before tackling this
 #
-# https://docs.google.com/presentation/d/1hyhp0ysWjc-7BCcchIegC24evaC-B7A-M829dOsfi_s/edit?usp=sharing
+# https://docs.google.com/presentation/d/1IoiD43zjp_XOEH0soCZGMBN4b13KWVndoHAxoUJMQoM/edit?usp=sharing
 
 # Doing the imports for you
 import numpy as np

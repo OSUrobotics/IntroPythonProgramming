@@ -45,16 +45,13 @@ fig, axs = plt.subplots(nrows, ncols, figsize=(6, 4))
 # --------------------------- Part 2 -------------------------------
 # Plot the Wrist torque data in the second window.
 #
-# You can do this one of three ways; note that in the hwk you'll need to do the 3rd option (with some help), but
+# You can do this one of two ways; note that in the hwk you'll need to do the 2nd option (with some help), but
 #   if you want to try it now, feel free.
 #
-# Option 1: Copy and paste the code from above and change the relevant data/lines of code (axs[], names/titles, start index)
+# Option 1: Copy and paste the code from above (twice) and change the relevant data/lines of code (axs[], names/titles, start index) in the second copy
 # Option 2: Encapsulate the plotting part in a function then call that function twice
 #   - pass in the axes to plot in, along with t values (or create them within the function)
 #   - do the x,y,z loop inside of the plot
-# Option 3: Write a for loop that loops over all the data channels and plots all of them (see HW 1)
-#   Note: You will need a second for loop for the dimensions (see HW 1)
-#   Note: For the axes, you'll need row-column indexing to convert from the channel number back to a row column
 
 # There is a way to add subplots to the current figure, but for this assignment, just close the current figure and
 #  call subplots again with 1 row and 2 columns
