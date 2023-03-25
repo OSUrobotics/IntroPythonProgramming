@@ -1,1 +1,12 @@
-{"c_initial": -1.0, "c_max": 0.854459357957, "c_final": -8.96706075522e-06, "rise_time": 0.01100000000000001, "peak_time": 0.315, "perc_overshoot": 85.4475987155846, "settling_time": 7.6, "system_mass": 1.0, "system_spring": 110.81663921393782, "system_damping": 1.0526315789473686}
+{
+  "c_initial": -1.0,
+  "c_max": 0.854459357957,
+  "c_final": -8.96706075522e-06,
+  "rise_time": 0.01100000000000001,
+  "peak_time": 0.315,
+  "perc_overshoot": 85.4475987155846,
+  "settling_time": 7.6,
+  "system_spring": 110.81663921393782,
+  "system_damping": 1.0526315789473686,
+  "system_mass": 1.0
+}

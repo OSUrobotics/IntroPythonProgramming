@@ -14,7 +14,7 @@
 # Programming practice: The focus in this assignment is on deciding when to create a function and what parameters to
 #   pass in and out of the function.
 #
-# Following on from lab 4, this will be an example of writing an iterative function - one where the intention is to
+# Following on from lab 4, the second part will be an example of writing an iterative function - one where the intention is to
 #  call the function multiple times, each time passing in the values returned from the previous function call. This
 #  can be a bit difficult to wrap your head around, so if you get stuck go back to the simpler examples and/or do it
 #  on paper yourself a few iterations.
@@ -53,11 +53,6 @@ def load_data_from_file(fname):
 def greater_than_index(in_list, in_x):
     pass
 
-# Check your code
-assert(greater_than_index(np.array([1.0, 3.0, 4.0, 7.0, 10.0]), 6.0) == 3)
-assert(greater_than_index(np.array([-2.5, 1.0, 4.0, 8.0, 4.0, 1.0, -2.5]), 4.0) == 2)
-assert(greater_than_index(np.array([1.1, 2.2, 3.3, 4.4, 5.5]), 100.5) == None)
-
 
 # Write a function that takes in a file name and outputs a dictionary with the following values
 #   You must use the names given
@@ -88,7 +83,8 @@ assert(greater_than_index(np.array([1.1, 2.2, 3.3, 4.4, 5.5]), 100.5) == None)
 # system_spring - this is omega_n^2 (see slides)
 # system_damping - the damping term (the linear coefficient, see slides)
 
-# You may write some additional helper functions here, if you wish
+# You should NOT write this all in one file...
+
 
 
 # YOUR CODE HERE
@@ -131,9 +127,94 @@ def compare_dictionaries(fname_dictionary, my_dict):
 #  - matplot lib has a text function for placing text
 
 
-# YOUR CODE HERE
-...
+# An example of a "helper" function for plotting
+def draw_corner(axs, x_values, y_values, ls, col):
+    axs.plot([x_values[0], x_values[1]], [y_values[1], y_values[1]], linestyle=ls, color=col)
+    axs.plot([x_values[1], x_values[1]], [y_values[0], y_values[1]], linestyle=ls, color=col)
 
-generate_answers()
-plot_system('Data/data2.csv')
-pass
+
+# YOUR CODE HERE
+# Define plot function(s) here 
+
+# ------------------------------------ Spring-mass damp system: Creating data --------------------
+#
+#  In this part of the assignment you'll simulate the spring-mass system yourself. We'll follow the second half of
+#  Lab 4 - using ode to do the simulation (you just have to write the derivative function and the set-up code).
+#
+#  This should be nearly identical to the predator_prey_derivative ode example (from a coding standpoint). The
+#   equations and the meanings of the variables will be different, however
+#   1) Like the c_tutorial_iterative_systems example, you will need to calculate two values dx/dt and dx2/dt2
+#   2) Like the predator_prey_derivative example, you will
+#        a) create a derivative function that takes in a 2 dimensional current state (x, dx/dt), t (not used), and params (c, k, and m)
+#              and returns dx/dt and dx^2/d^2t
+#        b) params will be a dictionary that you create in the calling code
+#        c) create a set of time values to evaluate the system at
+#        d) use ode to do the actual forward simulation
+#  Functions you'll need
+#   a) a derivative function (like predator_prey_derivative)
+#   b) a function/cell to create the initial data to simulate and write out/save the results
+#   c) a function that calls your code from part 1 to analyze and plot the data (do NOT write new plotting/analysis code)
+#       Option 1: Write the data out to a file then read it back in using the code you just wrote in the previous part
+#       Option 2: If you split up your plot function the right way, you can just pass the data directly to the plot function
+#
+#  Parameters:
+#    c: damping term (system_damping in json file)
+#    k: spring term (system_spring in json file)
+#    m: mass
+# Equation:
+#   dx/dt = dx/dt
+#   d^2x/d^2t = (-c * dx/dt - k * x) / m
+#
+# YOUR CODE HERE
+
+# YOUR CODE HERE
+# Re-create the plot for data 1 using the parameters you extracted in part 1 and your simulation function
+#   Simulate/Plot from time 0 to time 10
+#
+# Create a different system with zeta 1.1, k 80, starting position -1.5 
+
+
+
+if __name__ == '__main__':
+
+    # load_data: load_data tests
+    ts, vs = load_data_from_file("data/data1.csv")
+    assert(len(ts) == len(vs))
+    assert(len(ts) == 20000)
+    assert(vs[-1] > vs[0])
+
+    # get_index: get_index tests
+    assert(greater_than_index(np.array([1.0, 3.0, 4.0, 7.0, 10.0]), 6.0) == 3)
+    assert(greater_than_index(np.array([-2.5, 1.0, 4.0, 8.0, 4.0, 1.0, -2.5]), 4.0) == 2)
+    assert(greater_than_index(np.array([1.1, 2.2, 3.3, 4.4, 5.5]), 100.5) == None)
+
+    # analysis: analyze data tests
+    assert(compare_dictionaries('Data/data1.json', analyze_data('Data/data1.csv')))
+    assert(compare_dictionaries('Data/data2.json', analyze_data('Data/data2.csv')))
+    assert(compare_dictionaries('Data/data3.json', analyze_data('Data/data3.csv')))
+
+    # plot_data: Call your plot function here with each of the 3 data functions
+    # plot data 1... etc
+
+    # Begin week 2
+    # ode_functions:
+
+    # Run the ode with the following parameters and store the answer in dict_answ
+    # Make sure you run the simulation long enough for it to stabilize
+    # zeta = 1.1, m = 2.0, spring constant (k) = 50.0
+    # set dict_answ = to be the dictionary containing the analysis of your system
+    assert(compare_dictionaries('Data/sim_and_plot_answer_a.json', dict_answ))
+
+    # plot_data1_recreate:
+    # Run your simulation, analyze it, and plot the results
+    # This SHOULD just be calling existing functions
+
+    # bigger_mass:
+    # Change the mass to 10, adjust the simulation time, then plot the result. Save the analysis in dict_bigger_mass
+    dict_bigger_mass_analysis = {}
+    # Note: this will only work in the autograder
+    assert(compare_dictionaries('Data/sim_and_plot_answer_c.json', dict_bigger_mass_analysis))
+
+    assert(np.isclose(dict_bigger_mass_analysis["settling_time"], 74.89, atol=0.1))
+
+    print("Done")
