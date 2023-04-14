@@ -19,7 +19,7 @@ import json as json
 #   Read in data, re-arrange it, and use it to do (text-based) statistical analysis
 # Lab week 2:
 #   Plot the data you worked with in lab week 1
-# Homework weeks 1 & 2:
+# Homework 1 weeks 1 & 2:
 #   Use a separate file to read in information about the first file in order to do more complicated re-arrangement of data
 #   Plot that data
 #
@@ -87,7 +87,7 @@ n_total_dims = 0
 print(f"Number of data channels items in list: {}, total summed number of dimensions: {n_total_dims}")
 
 # Now do a bit of math to figure out the total number of time steps (number of columns / number of dimensions)
-#  Make sure this is an integer
+#  Make sure this is an integer (think // instead of / for divide)
 # And remember that there is one extra column (the last one) that stores if the pick was successful or not
 # YOUR CODE HERE
 n_time_steps = ...
@@ -176,3 +176,23 @@ all_indices_from_where = ...
 # for all row, column in all_indices_from_where
 #.   if this is the column for wrist torque 
 #.      print(f"Row: {r}, Time step: {c // n_time_steps} Successful y/n: {pick_data[r, -1] == 1}, value: {pick_data[r, c]}")
+
+if __name__ == '__main__':
+    n_dims = 3
+    n_steps = 10
+    data_fake = np.zeros([3, n_dims * n_steps + 1])
+
+    start_channel = 0
+    for t in range(0, n_steps):
+        data_fake[0, start_channel:start_channel + n_dims] = t
+        start_channel += n_dims
+
+    for d in range(0, n_dims):
+        data_fake[1, d::n_dims] = 1 + d
+        data_fake[2, d::n_dims] = 10 + d
+
+    data_fake[0, -1] = -1
+    data_fake[1, -1] = 0
+    data_fake[2, -1] = 1
+
+    np.savetxt("Data/data_fake.csv", data_fake, fmt='%.1f', delimiter=',')
