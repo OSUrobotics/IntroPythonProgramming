@@ -14,7 +14,7 @@
 #  A square and a wedge and a star object
 #
 # Optional:
-#  You can use the function make_object_by_clicking in object_routines to make a novel object
+#  You can use the function make_object_by_clicking in object_routines to make a novel object (run object_routines.py)
 #  make sure to include that object's file when you hand in
 
 

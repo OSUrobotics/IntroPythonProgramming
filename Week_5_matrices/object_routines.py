@@ -9,6 +9,10 @@
 #
 # An object is just a dictionary with the vertex locations of the geometry stored in an "XYs" array.
 # An object can also have a color (for drawing), and a matrix
+#
+# Optional:
+#  You can use the function make_object_by_clicking in object_routines to make a novel object (run object_routines.py)
+#  make sure to include that object's file when you hand in
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -72,26 +76,24 @@ def write_object(obj, name):
 #   way to do this
 def onclick(event):
     global glob_current_obj
-    global axs, fig
+    global glob_axs, glob_fig, glob_cid
 
     ix, iy = event.xdata, event.ydata
     print(f"x {ix} y {iy}")
 
-    axs.plot(ix, iy, 'Xb')
-    if glob_current_obj is None:
-        glob_current_obj = make_blank_object()
-        glob_current_obj["XYs"].append([ix, iy])
-    else:
-        glob_current_obj["XYs"].append([ix, iy])
+    glob_axs.plot(ix, iy, 'Xb')
+    glob_current_obj["XYs"].append([ix, iy])
+    if len(glob_current_obj['XYs']) > 1:
         xs = [glob_current_obj["XYs"][-2][0], glob_current_obj["XYs"][-1][0]]
         ys = [glob_current_obj["XYs"][-2][1], glob_current_obj["XYs"][-1][1]]
-        axs.plot(xs, ys, '-b')
+        glob_axs.plot(xs, ys, '-b')
 
-        if np.isclose(ix, glob_current_obj["XYs"][0][0], 0.05) and np.isclose(iy, glob_current_obj["XYs"][0][1], 0.05):
+        if np.isclose(ix, glob_current_obj["XYs"][0][0], atol=0.1) and np.isclose(iy, glob_current_obj["XYs"][0][1], atol=0.1):
             print(f"Writing object {glob_current_obj['Name']}")
             with open("Data/" + glob_current_obj['Name'] + ".json", "w") as f:
                 dump(glob_current_obj, f)
-            plt.close(fig)
+            glob_fig.canvas.mpl_disconnect(glob_cid)
+            plt.close(glob_fig)
 
 
 def make_object_by_clicking(in_name):
@@ -99,14 +101,15 @@ def make_object_by_clicking(in_name):
          close to the first click point
     @param in_name - name to use"""
     global glob_current_obj
-    global axs, fig
+    global glob_axs, glob_fig, glob_cid
     glob_current_obj = make_blank_object()
     glob_current_obj["Name"] = in_name
-    fig, axs = plt.subplots(1, 1)
-    axs.plot([-1, 1], [0, 0], '-k')
-    axs.plot([0, 0], [-1, 1], '-k')
+    glob_fig, glob_axs = plt.subplots(1, 1)
+    glob_axs.plot([-1, 1], [0, 0], '-r')
+    glob_axs.plot([0, 0], [-1, 1], '-k')
 
-    fig.canvas.mpl_connect('button_press_event', onclick)
+    glob_cid = glob_fig.canvas.mpl_connect('button_press_event', onclick)
+    plt.show()
 
     return glob_current_obj
 
@@ -187,7 +190,7 @@ if __name__ == '__main__':
         print("Click in the window to start making the object.")
         print("Clicking on the first point again will close/finish the object")
         print("The file will be saved in Data")
-        obj_name = input("Object name? ")
+        obj_name = input("Type an object name to get started: ")
         obj = make_object_by_clicking(obj_name)
     else:
         sq = make_square()
