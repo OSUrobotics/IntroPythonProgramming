@@ -19,11 +19,8 @@ def my_quad_func(x, a=0, b=1, c=0):
     @param b - scale x
     @param c - add c
     @returns ax^2 + bx + c"""
-    # BEGIN SOLUTION
-    return a * x**2 + b * x + c
-    # END SOLUTION
+    # TODO: calculate, and return, the function
     return 0
-
 
 
 if __name__ == '__main__':
@@ -58,3 +55,7 @@ if __name__ == '__main__':
     axs.set_ylabel('y')
     axs.axis('equal')
     axs.set_title("Minimum of quadratic")
+
+
+# Answer for my_quad_func
+#     return a * x**2 + b * x + c

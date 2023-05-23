@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 
-from scipy.optimize import fmin
-from functools import partial
-import matplotlib.pyplot as plt
+# Our usual imports
 import numpy as np
+import matplotlib.pyplot as plt
+
+# New scipy import that finds the minima of a function
+from scipy.optimize import fmin
+# A helper function that "binds" variables
+from functools import partial
 
 # -------------------------- Optimization -------------------------------
 #
@@ -82,6 +86,13 @@ if __name__ == '__main__':
     result = fmin(lambda array: my_paraboloid(array[0], array[1]), [0, 0], maxfun=200, full_output=True)
     print(result)
     print(f"Function minimum is {result[1]}, found at x,y {result[0]}")
+
+    # This does the same thing, but with fmin's args
+    # args must be in the same order as the additional parameters in elliptic paraboloid
+    # The lambda function we create takes 5 arguments - the last four of which will be set to args
+    result_args = fmin(lambda array, x0, y0, a, b: elliptic_paraboloid(array[0], array[1], x0, y0, a, b), [0, 0], args=(3, 2, 8, 16), full_output=True)
+    print(result_args)
+    print(f"Function minimum is {result_args[1]}, found at x,y {result_args[0]}")
 
     # Notice the subplot_kw argument - this lets matlab know we want to plot in 3D and how to set the camera
     fig2, axs2 = plt.subplots(subplot_kw={"projection": "3d"})
