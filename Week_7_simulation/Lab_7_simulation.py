@@ -70,7 +70,7 @@ def plot_pinball_lab(ret_poses, walls, total_time):
     axs.legend()
 
 
-# TODO: Play around with delta t and see what happens when it hits the wall
+# TODO: Check with different starting states. Set to final one when done (bouncing off all walls)
 if __name__ == '__main__':
     # Time step
     delta_t = 0.01

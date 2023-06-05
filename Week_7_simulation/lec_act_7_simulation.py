@@ -74,7 +74,7 @@ if __name__ == '__main__':
     # Time step
     delta_t = 0.1
 
-    starting_state = np.zeros([6, 2])  # meters
+    starting_state = np.zeros([3, 2])  # meters
     starting_state[0, :] = [0, 0] # Start at zero, zero
     # Velocity - mostly up with a bit of x
     starting_state[1, :] = [-0.25, 5.0]

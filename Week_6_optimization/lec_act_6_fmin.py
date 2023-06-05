@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from scipy.optimize import fmin
-from functools import partial
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -10,6 +9,8 @@ import numpy as np
 #
 # This is practice dealing with what can go "wrong" with fmin - local minima, multiple answers, setting the stopping
 #  criteria
+#
+# Slides: https://docs.google.com/presentation/d/1xKhWyquiP-_wM9AnJJ57BBtF0eitEqSdODq34ttMZgk/edit?usp=sharing
 
 # This function has several local minima - how to find the best one?
 def my_multiple_minima_func(x):
@@ -45,19 +46,22 @@ if __name__ == '__main__':
     #---------------- Search parameters example ------------------
     fig2, axs2 = plt.subplots(1, 1, figsize=(4, 4))
     ts = np.linspace(2.6, 2.9)
-    axs2.plot(ts, my_multiple_minima_func(ts), linestyle='-', label="Local minima")
+    axs2.plot(ts, my_multiple_minima_func(ts), linestyle='-', label="Zoom in on curve")
 
     x_at_min, f_at_x_min, _, _, _ = fmin(my_multiple_minima_func, 4.0, full_output=True)
-    axs2.plot(x_at_min, f_at_x_min, 'Xr')
+    axs2.plot(x_at_min, f_at_x_min, 'Xr', label="Accurate minima")
     print(f"Minimum of f is {f_at_x_min}, happens at x={x_at_min[0]}")
 
-    # TODO: Change xtol and ftol until the number o fiterations is under 10
+    # TODO: Change xtol and ftol until the number of iterations is under 10
     # (Also play around with the values to see how LONG you can make it run...
-    x_not_as_accurate_min, f_not_as_accurate_min, _, _, _ = fmin(my_multiple_minima_func, 4.0, xtol=0.0001, ftol=0.0001, full_output=True)
+    x_not_as_accurate_min, f_not_as_accurate_min, iters, _, _ = fmin(my_multiple_minima_func, 4.0, xtol=0.0001, ftol=0.0001, full_output=True)
 # YOUR CODE HERE
-    axs2.plot(x_not_as_accurate_min, f_not_as_accurate_min, 'Xg')
+    print(f"Not accurate minimum of f is {f_not_as_accurate_min}, happens at x={x_not_as_accurate_min[0]}")
+
+    axs2.plot(x_not_as_accurate_min, f_not_as_accurate_min, 'Xg', label="Not Accurate minima")
 
     axs2.set_xlabel('x')
     axs2.set_ylabel('y')
+    axs2.legend()
 
     axs2.set_title("Minimum of quartic: Zoom in on Local minima")
