@@ -44,6 +44,8 @@ def compute_next_step(current_state, delta_t=0.1):
 # This is a generalization trade-off - doing it with a half plane means I could, in theory, make any convex shape
 #  instead of just a box... say a trapezoid
 
+# YOUR CODE HERE
+    return x_y, vx_vy
 
 
 # When you're starting, it might be easier to write a function for, eg, JUST the top wall

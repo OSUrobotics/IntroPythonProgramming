@@ -61,21 +61,20 @@ if __name__ == '__main__':
     starting_state = np.zeros([3, 2])  # location, velocity, acceleration
     starting_state[0, :] = [0, 0] # Start at zero, zero
     # Velocity - mostly up with a bit of x noise
+    starting_state[1, :] = [0.5, 3.5]
     # Check top wall only
     # starting_state[1, :] = [-0.2, 10.0]
     # Check all walls
     # starting_state[1, :] = [5.2, 5.0]
     # Check bottom left bumper
-    starting_state[1, :] = [2.4, 8.5]
-    # Check distance traveled
-    starting_state[1, :] = [0.5, 3.5]
+    # starting_state[1, :] = [2.4, 8.5]
     starting_state[2, :] = [0.0, acceleration_due_to_gravity()]
 
     # TODO Add your test code, definitions of the walls, etc here
     # TODO Plot the pinball setup plus your path
 # YOUR CODE HERE
 
-    # TODO For these tests  and use this starting state
+    # TODO For these tests use this starting state
     #  - do NOT place a bumper/wall in the path - it should just go up and down
     #  - Use the given starting position and velocity
     #  - Use a delta t of 0.01

@@ -3,13 +3,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# You can import classes just like you import functions
-from lec_act_9_class_pinball_wall import PinballWall
-from Lab_9_class_pinball_bumper import PinballBumper
 
 # ----------------------- Pinball Classs ---------------------------
 #
 # One more class - the pinball class that does the simulation
+#
+# In this homework you'll take the classes you created in the lecture activity and lab (PinballWall and PinballBumper)
+#  and use them in a class that wraps up the entire simulation (PinballClass)
+
+# You can import classes just like you import functions
+#  To make this work, copy your class definition from your .ipynb file to the corresponding .py file
+#   (or make a new file with both the classes in it)
+from lec_act_9_class_pinball_wall import PinballWall
+from Lab_9_class_pinball_bumper import PinballBumper
+
 
 class Pinball:
     """ Walls and bumpers for a rather boring pinball game"""
@@ -68,9 +75,12 @@ class Pinball:
         """ Call compute one time step multiple times and store it in a numpy array
         This should be your simulate code, again with delta_t and do_drag replaced with self.delta_t, as well
         as compute_next_step
-        @param starting_state - the starting positino, velocity, acceleration
+        @param starting_state - the starting position, velocity, acceleration
         @return position & velocity values as two 2xtimesteps numpy array
         """
+
+        # TODO - put your simulate function here. Only pass in the starting state - the remainder of the
+        #  data you use to pass in should be in the self. pointer
 
         # The returned array.We do not know the size, so do not pre-allocate
         self.poses = []
@@ -78,36 +88,18 @@ class Pinball:
 
         # Use a while loop instead of the for loop
         # Set the stopping criteria based on current state y value
-        # Add in each wall/top at a time (there are test routines for reach below)
-        # Use if statements, not if-else statements, because it is possible to be outside of the top and side wall...
         # We know the first pose is the initial one
-        # Notice that the poses are being stored in the self varialbe
-        self.poses.append([starting_state[0, 0], starting_state[0, 1]])
-        self.velocities.append([starting_state[1, 0], starting_state[1, 1]])
-
-        # Note the start from 1 - you already know what the values for 0 should be
-        current_state = starting_state
-        while current_state[0, 1] >= 0.0:
-            # Make sure to use the last x,y values you just computed
-            current_state = self._compute_next_step(current_state)
-            current_state[2, 0] = 0.0
-            current_state[2, 1] = self.acceleration_due_to_gravity()
-
-            # This should work, and will replace your if/then code for walls and bumpers, if you classes are
+        # Notice that the poses are being stored in the self variable
+        # TODO STEP 2 Use this code to do the inside/outside & reflect for each wall
+            # This should work, and will replace your if/then code for walls and bumpers, if your classes are
             #   implemented correctly
-            for o in self.obstacles:
-                if o.outside(current_state[0, :]):
-                    pt_back, vel_back = o.reflect(current_state[0, :], current_state[1, :])
-                    current_state[0, :] = np.array(pt_back).transpose()
-                    current_state[1, :] = np.array(vel_back).transpose()
+            # for o in self.obstacles:
+            #     if o.outside(current_state[0, :]):
+            #         pt_back, vel_back = o.reflect(current_state[0, :], current_state[1, :])
+            #         current_state[0, :] = np.array(pt_back).transpose()
+            #         current_state[1, :] = np.array(vel_back).transpose()
 
-            # Put the new values into the numpy array
-            self.poses.append([current_state[0, 0], current_state[0, 1]])
-            self.velocities.append([current_state[1, 0], current_state[1, 1]])
-
-        # All done - convert to a numpy array
-        self.poses = np.array(self.poses).transpose()
-        self.velocities = np.array(self.velocities).transpose()
+# YOUR CODE HERE
         # It's ok to return the self results
         return self.poses, self.velocities
 
@@ -151,7 +143,7 @@ if __name__ == '__main__':
     starting_state = np.zeros([3, 2])  # location, velocity, acceleration
     starting_state[0, :] = [0, 0] # Start at zero, zero
     # Velocity - mostly up with a bit of x noise
-    starting_state[1, :] = [2.4, 8.5]
+    starting_state[1, :] = [2.4, 15.5]
     starting_state[2, :] = [0.0, pinball.acceleration_due_to_gravity()]
 
     # Run the simulation
