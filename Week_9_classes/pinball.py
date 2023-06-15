@@ -64,8 +64,12 @@ class Pinball:
         """ Add in a bumper or wall
         @param obstacle - an instance of a bumper or a wall"""
         # Putting this as a separate method because it works better to make and add then try to pass everything
-        #  into the init function. More sophisticated versions would also allow removing/changing obstacles
+        #  into the init function. More sophisticated versions would also allow removing/changing individual obstacles
         self.obstacles.append(obstacle)
+
+    def remove_all_obstacles(self):
+        """ Remove all obstacles so (makes testing easier)"""
+        self.obstacles = []
 
     def _compute_next_step(self, current_state):
         """ How to compute the next position and velocity from this one
