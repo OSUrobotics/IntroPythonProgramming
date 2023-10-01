@@ -66,6 +66,7 @@ import numpy as np
 #    structures are setup to handle this a lot better than numpy arrays.
 
 # Example 1: Reading in a csv file of numbers directly into a numpy array
+# Note: If you get a file name error, click on the triangle and select "run python file in a dedicated terminal"
 file_name = "Data/proxy_test_grasp.csv"
 # This is a first example of the fun of numpy/scipy function parameters. Google numpy loadtxt to get a list of
 #   all possible parameters - all of which have default values, except the file name.
@@ -107,7 +108,7 @@ print(f"First element: {data_zeros[0, 0, 0]}")
 #  It is a tuple, so you can't change it
 data_ones = np.ones(data_from_csv.shape)
 print(f"Data dimensions: {data_ones.shape}, total number of elements: {data_ones.size}")
-print(f"First element: {data_ones[0, 0, 0]}")
+print(f"First element: {data_ones[0, 0]}")
 
 # Making an array of numbers starting and stopping at given values (linspace)
 #  15 numbers, starting at -1 and going to 1

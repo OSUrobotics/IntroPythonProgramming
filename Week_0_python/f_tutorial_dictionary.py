@@ -53,7 +53,7 @@ if "Sum" in my_dict:
 
 # [For illustration purposes only - do not do this] Loop through all the keys and see if one of them is Sum
 for k in my_dict.keys():
-    if k is "Sum":
+    if k == "Sum":
         print(f"Found sum, value {my_dict['Sum']}")
 
 # And we can get out an element and edit it like this (add one to Accessed):

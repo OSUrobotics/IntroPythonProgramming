@@ -292,7 +292,7 @@ def bad_programmer(l_orig):
     for i, v in enumerate(l_orig):
         if v < 0:
             l_orig[i] = 0.0
-        elif v is math.nan:
+        elif v == 0.0:
             l_orig[i] = 0.0
     return l_orig
 
@@ -309,12 +309,12 @@ def good_programmer(l_orig):
     for v in l_orig:
         if v < 0:
             l_orig_fixed.append(0.0)
-        elif v is math.nan:
-            l_orig_fixed.append(0.0)
+        elif v == 0.0:
+            l_orig_fixed.append(1.0)
         else:
             l_orig_fixed.append(v)
     return l_orig_fixed
-l_orig = [3.0, 5.0, -1.0, 6.0, 0.0 / 0.0, 5.0]
+l_orig = [3.0, 5.0, -1.0, 6.0, 0.0, 5.0]
 l_orig_fixed = good_programmer(l_orig)
 print("These are the NOT the same list")
 print(l_orig)
