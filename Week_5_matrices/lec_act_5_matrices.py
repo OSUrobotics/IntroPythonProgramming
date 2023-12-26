@@ -26,6 +26,8 @@ from object_routines import read_object, make_object_by_clicking, plot_object_in
 
 
 if __name__ == '__main__':
+    make_object_by_clicking("new_obj")
+
     # initial "scene"
     sq = read_object("Square")
     star = read_object("Star")

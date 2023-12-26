@@ -186,6 +186,7 @@ def get_rotation_link(arm_link):
     @return 3x3 rotation matrix"""
 
     # TODO Create a rotation matrix based on the link's angle (stored with the key "Angle")
+    # Change this to return the rotation matrix instead of the identity
 # YOUR CODE HERE
     return np.identity(3)
 
@@ -280,6 +281,7 @@ def get_matrices_all_links(arm_with_angles):
     # Now do all of the links - the last matrix is the one that is applied to the gripper
     # This does NOT include the finger matrices
     for link in arm_with_angles[1:-1]:
+        pass
         # TODO: append a matrix to the list that is the matrix that we will multiply this link from
         #   In other words, multiply the last matrix by the matrix for this link then add it to the list
 # YOUR CODE HERE

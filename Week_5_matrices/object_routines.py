@@ -94,6 +94,7 @@ def onclick(event):
                 dump(glob_current_obj, f)
             glob_fig.canvas.mpl_disconnect(glob_cid)
             plt.close(glob_fig)
+    glob_fig.canvas.draw()
 
 
 def make_object_by_clicking(in_name):
