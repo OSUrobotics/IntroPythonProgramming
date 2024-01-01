@@ -1,0 +1,15 @@
+{
+  "c_initial": -1.0,
+  "c_peak": 0.854459357957068,
+  "c_final": -8.964345682556875e-06,
+  "c_second_peak": 0.6238565251018747,
+  "c_valley": -0.7301149896847313,
+  "t_peak": 0.315,
+  "t_second_peak": 0.9440000000000001,
+  "t_valley": 0.629,
+  "peak_period": 0.628,
+  "perc_overshoot": 85.44565155691771,
+  "system_mass": 1,
+  "system_spring": 100.35239198614349,
+  "system_damping": 1.0018450093266549
+}
