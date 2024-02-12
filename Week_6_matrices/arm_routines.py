@@ -42,12 +42,6 @@ def get_transform_base(base_width=1.0, base_height=0.5):
     #    mt.make_scale_matrix(sx, sy)  rotation and translation
 
     mat_return = np.identity(3)
-    # BEGIN SOLUTION
-    mat_scl = mt.make_scale_matrix(base_height / 2.0, base_width / 2.0)
-    mat_rot = mt.make_rotation_matrix(np.pi / 2.0)
-    mat_trans = mt.make_translation_matrix(0.0, base_width / 4.0)
-    mat_return = mat_trans @ mat_rot @ mat_scl
-    # END SOLUTION
 
     return mat_return
 
@@ -63,11 +57,6 @@ def get_transform_link(arm_length, arm_height):
     # TODO: return the matrix that puts the link in the right position/size/orientation
     #  Reminder that squares are defined by -1,-1 to 1,1, and so currently have side lengths of 2...
     mat_return = np.identity(3)
-    # BEGIN SOLUTION
-    mat_scl = mt.make_scale_matrix(arm_length / 2.0, arm_height / 2.0)
-    mat_trans = mt.make_translation_matrix(arm_length * 0.5, 0)
-    mat_return = mat_trans @ mat_scl
-    # END SOLUTION
 
     # Force recalculation of matrix
     return mat_return
@@ -80,10 +69,6 @@ def get_transform_palm(palm_width):
 
     # TODO: Calculate the scale matrixthat makes the palm the correct size
     mat_return = np.identity(3)
-    # BEGIN SOLUTION
-    mat_scl = mt.make_scale_matrix(palm_width / 20.0, palm_width / 2)
-    mat_return = mat_scl
-    # END SOLUTION
 
     return mat_return
 
@@ -103,15 +88,6 @@ def get_transform_finger(palm_width, finger_size, b_is_top):
     #  default configuration
     # TODO: If you are doing the optional finger placement, change this matrix
     mat_return = mt.make_scale_matrix(0.1 * finger_size[0], 0.1 * finger_size[1] / 2)
-    # BEGIN SOLUTION
-    mat_scl = mt.make_scale_matrix(finger_size[0] / 2.0, finger_size[1] / 2.0)
-    if b_is_top:
-        scl = 1.0
-    else:
-        scl = -1.0
-    mat_trans = mt.make_translation_matrix(finger_size[0] / 2.0, scl * palm_width / 2.0)
-    mat_return = mat_trans @ mat_scl
-    # END SOLUTION
 
     return mat_return
 
@@ -212,9 +188,6 @@ def get_rotation_link(arm_link):
 
     # TODO Create a rotation matrix based on the link's angle (stored with the key "Angle")
     # Return that matrix instead of the identity matrix
-    # BEGIN SOLUTION
-    return mt.make_rotation_matrix(arm_link["Angle"])
-    # END SOLUTION
     return np.identity(3)
 
 
@@ -229,13 +202,6 @@ def get_matrix_finger(finger):
     #   Reminder: The middle of the finger can be found using mt.get_dx_dy_from_matrix
     #    Note: You want to move the base of the finger, NOT the middle, to the origin before you do the rotate
     matrix = np.identity(3)
-    # BEGIN SOLUTION
-    dx, dy = mt.get_dx_dy_from_matrix(finger["Matrix"])
-    dx = 0.0
-    matrix = mt.make_translation_matrix(dx, dy) @ \
-             mt.make_rotation_matrix(finger["Angle"]) @ \
-             mt.make_translation_matrix(-dx, -dy)
-    # END SOLUTION
     return matrix
 
 
@@ -279,12 +245,6 @@ def get_matrix_base(base_link):
     #  Step 3: Extract only the rotation element of base_link by rotating the vector 1,0 
     #    You might find get_theta_from_matrix in matrix_routines.py useful
     #  Step 4: Rotate first (Rotation matrix in step 3), then translate (Point in step 2)
-    # BEGIN SOLUTION
-    base_top = base_link["Matrix"] @ np.transpose(np.array([1.0, 0.0, 1.0]))
-    dtheta = mt.get_theta_from_matrix(base_link["Matrix"])
-
-    return mt.make_translation_matrix(base_top[0], base_top[1]) @ mt.make_rotation_matrix(dtheta)
-    # END SOLUTION
     # Return the matrix that makes the base (instead of an identity matrix)
     return np.identity(3)
 
@@ -304,11 +264,6 @@ def get_matrix_link(arm_link):
     #          (point_in_world = matrix @ point_in_local, Remember that the matrix is 3x3.)
     #  Step 3: Get the rotation matrix by using make_rotation_matrix and the angle stored in ["Angle"].
     #  Step 4: Translate first (Point in step 2), then rotate (Rotation matrix in step 3) 
-    # BEGIN SOLUTION
-    link_end = arm_link["Matrix"] @ np.transpose(np.array([1.0, 0.0, 1.0]))
-
-    return mt.make_rotation_matrix(arm_link["Angle"]) @ mt.make_translation_matrix(link_end[0], link_end[1])
-    # END SOLUTION
     # Return the matrix that rotates the link (instead of an identity matrix)
     return np.identity(3)
 
@@ -335,9 +290,6 @@ def get_matrices_all_links(arm_with_angles):
     for link in arm_with_angles[1:-1]:
         # TODO: append a matrix to the list that is the matrix that we will multiply this link from
         #   In other words, multiply the last matrix by the matrix for this link then add it to the list
-        # BEGIN SOLUTION
-        matrices.append(matrices[-1] @ get_matrix_link(link))
-        # END SOLUTION
 
     return matrices
 
@@ -357,12 +309,6 @@ def get_gripper_location(arm_with_angles):
     # Step 1: Get the matrices
     # Step 2: Use the last matrix plus the rotation of the wrist to build a matrix for the gripper
     # Step 3: Multiply the last matrix by [d, 0] to get the location in world coordinates
-    # BEGIN SOLUTION
-    matrices = get_matrices_all_links(arm_with_angles)
-    matrix_gripper = matrices[-1] @ get_rotation_link(gripper[0])
-    gripper_loc_grasp = matrix_gripper @ np.transpose(np.array([grasp_dist, 0.0, 1.0]))
-    return (gripper_loc_grasp[0], gripper_loc_grasp[1])
-    # END SOLUTION
     # Format for returning a tuple
     return (0, 0)
 
@@ -388,10 +334,6 @@ def plot_arm_components(axs, arm, b_with_angles=False):
 
         # TODO: if b_with_angles is True, sets the rotation matrix by the angle stored in the component
         #   You should call get_rotation_link to get the matrix
-        # BEGIN SOLUTION
-        if b_with_angles:
-            rot_matrix = get_rotation_link(component)
-        # END SOLUTION
 
         plot_object_in_world_coord_system(axs[i], component, rot_matrix)
         axs[i].set_title(component["Name"])
@@ -415,10 +357,6 @@ def plot_arm_components(axs, arm, b_with_angles=False):
         # TODO (optional): Rotate each finger by the given amount, then rotate the entire gripper by the wrist angle
         # Step 1: Edit get_matrix_finger to get the matrix to move just the finger
         # Step 2: Multiply that matrix by the rotation matrix for the palm
-        # BEGIN SOLUTION
-        if b_with_angles:
-            rot_matrix = get_rotation_link(palm) @ get_matrix_finger(finger)
-        # END SOLUTION
         plot_object_in_world_coord_system(axs[-1], finger, rot_matrix)
 
     # Draw a red line for the palm and an x at the base of the wrist and another at the finger contact points

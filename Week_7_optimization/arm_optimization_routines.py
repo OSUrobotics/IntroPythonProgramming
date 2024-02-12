@@ -80,11 +80,7 @@ def vector_to_goal(arm_with_angles, target):
     # TODO:
     #   Get the gripper/grasp location using get_gripper_location
     #   Calculate and return the vector
-    # BEGIN SOLUTION
-    end_pt = get_gripper_location(arm_with_angles)
-
-    return np.array(target) - np.array(end_pt)
-    # END SOLUTION
+    return 
 
 
 def distance_to_goal(arm_with_angles, target):
@@ -99,11 +95,7 @@ def distance_to_goal(arm_with_angles, target):
     """
 
     # TODO: Call the function above, then return the vector's length
-    # BEGIN SOLUTION
-    vec = vector_to_goal(arm_with_angles, target)
-
-    return np.sqrt(vec[0] * vec[0] + vec[1] * vec[1])
-    # END SOLUTION
+    return
 
 
 def func_for_fmin(angles_from_fmin, arm, target):
@@ -120,10 +112,6 @@ def func_for_fmin(angles_from_fmin, arm, target):
     #  2: Use set_angles_of_arm_geometry to set the joint angles of the arm
     #  3: Return the distance to the target
     # See the angles_to_list helper function
-    # BEGIN SOLUTION
-    set_angles_of_arm_geometry(arm, angles_numpy_to_list(angles_from_fmin))
-    return distance_to_goal(arm, target)
-    # END SOLUTION
     return 0.0
 
 
@@ -146,10 +134,5 @@ def do_fmin(angles_start, arm, target):
     #  in ode solve - this is how you will pass in the arm geometry and the target point
     #  4. Copy the angles returned from fmin into angles_ret
     #  See angles_to_list and list_to_angles helper functions
-    # BEGIN SOLUTION
-    angles_for_fmin = angles_list_to_numpy(angles_start)
-    angs_at_min = fmin(func_for_fmin, x0=angles_for_fmin, args=(arm, target))
-    angles_ret = angles_numpy_to_list(angs_at_min, angles_start[-1][1], angles_start[-1][2])
-    # END SOLUTION
     return angles_ret
 
