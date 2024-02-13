@@ -183,7 +183,8 @@ def create_arm_geometry(base_size, link_sizes, palm_width, finger_size):
 # ------------------ Step 2: Rotate each component by the given angle -------------------------------------
 def get_rotation_link(arm_link):
     """ Compute JUST the rotation matrix for this link
-    @param arm_link - the link as an object dictionary, angle stored in arm_link['Angle']
+    arm_link is the dictionary element that corresponds to one of the links
+    @param arm_link - an Object dictionary, with the angle stored in arm_link['Angle']
     @return 3x3 rotation matrix"""
 
     # TODO Create a rotation matrix based on the link's angle (stored with the key "Angle")
@@ -194,12 +195,13 @@ def get_rotation_link(arm_link):
 def get_matrix_finger(finger):
     """ Compute JUST the matrix that moves the finger to the correct angle
     Pulling this out as a method so we can use it elsewhere
-    @param finger - the finger as an object dictionary
+    Finger is the dictionary element that corresponds to one of the fingers
+    @param finger - the finger as an object dictionary, angle stored in finger['Angle']
     @return a 3x3 matrix"""
 
     # TODO (optional):
     #   Translate the base of the finger back to the origin, rotate it, then translate it back out
-    #   Reminder: The middle of the finger can be found using mt.get_dx_dy_from_matrix
+    #   Reminder: The middle of the finger can be found using mt.get_dx_dy_from_matrix with the 'Matrix' key
     #    Note: You want to move the base of the finger, NOT the middle, to the origin before you do the rotate
     matrix = np.identity(3)
     return matrix
