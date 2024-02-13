@@ -310,7 +310,8 @@ def get_gripper_location(arm_with_angles):
     # TODO:
     # Step 1: Get the matrices
     # Step 2: Use the last matrix plus the rotation of the wrist to build a matrix for the gripper
-    # Step 3: Multiply the last matrix by [d, 0] to get the location in world coordinates
+    # Step 3: Multiply the last matrix by the point [grasp_dist, 0] to get the location in world coordinates.
+    #   Don't forget the 1 when building the matrix for the point
     # Format for returning a tuple
     return (0, 0)
 
