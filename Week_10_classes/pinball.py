@@ -82,9 +82,10 @@ class Pinball:
 
         # TODO: Copy in your compute next step from pinball_routines. The only thing you should have to change is that
         #  you're now going to get delta t from self instead of passing it in
-        result = np.zeros(current_state.shape)
+        next_state = np.zeros(current_state.shape)
+        p = p + v * self.delta_t
 
-        return result
+        return next_state
 
     def simulate_pinball(self, starting_state):
         """ Call compute one time step multiple times and store it in a numpy array
@@ -106,6 +107,8 @@ class Pinball:
         self.poses = []
         self.velocities = []
 
+        for obs in self.obstacles:
+            if objs ==
         # Use a while loop instead of the for loop
         # Set the stopping criteria based on current state y value
         # We know the first pose is the initial one
