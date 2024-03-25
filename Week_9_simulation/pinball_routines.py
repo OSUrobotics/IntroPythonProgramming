@@ -2,15 +2,6 @@
 
 import numpy as np
 
-# This bit of crazy code ensures that we can access the files in Week_6_matrices
-# Important: If current directory is IntroPythonProgramming and NOT Week_8_simulation, then you need
-#   to change the python setting (extensions->python->gear box ->Execute in file Dir) to execute in the 
-#   current directory (see https://docs.google.com/document/d/1Cp4uuRHMWHfKTAbYAV14y2tMWslmj_-bv_xo3CxYGAo/edit?usp=sharing)
-import os 
-import sys
-if "Week_6_matrices" not in sys.path:
-    sys.path.insert(0, os.path.abspath('../Week_6_matrices'))
-
 
 # ----- iterative systems part II ----------
 # These are the routines used in this week's assignments. Copy them, or include this .py file
