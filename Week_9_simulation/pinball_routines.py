@@ -29,6 +29,12 @@ def compute_next_step(current_state, delta_t=0.1):
     #  Velocity is velocity + dt * acceleration
     #  Acceleration is gravity (optional HWK: Add drag, which is a fraction of velocity in the opposite direction)
     result = np.zeros(current_state.shape)
+    # YOUR CODE HERE
+    # The new position (for both x and y) is just p + dt * v - current position + delta t * velocity
+    result[0, :] = current_state[0, :] + delta_t * current_state[1, :]   # Numpy arrays will handle doing both x and y
+    # The new velocity for x is the old velocity plus some of the acceleration
+    # result[1, :] = current_state[1, :] + (delta_t ** 2.0) * current_state[2, :] / 2.0
+    # Acceleration does not change
 
     return result
 
@@ -42,22 +48,14 @@ def compute_next_step(current_state, delta_t=0.1):
 # This is a generalization trade-off - doing it with a half plane means I could, in theory, make any convex shape
 #  instead of just a box... say a trapezoid
 
-def outside_wall(x_y, a_b_c):
-    """ Is the point outside of this half/plane representing the wall?
-    @param x_y numpy array/tuple for the current location
-    @param a_b_c triplet of numbers a b c
-    @return True or False"""
+# YOUR CODE HERE
     # TODO Return true if x_y is on the other side of the wall
-    return True
-
-
-def reflect_wall(x_y, vx_vy, a_b_c):
-    """ assuming the point is outside of the half wall, reflect it back in
-    @param x_y numpy array/tuple for the current location
-    @param vx_vy numpy array/tuple for the current velocity
-    @param a_b_c triplet of numbers a b c (a*x+b*y+c = 0 is the equation for the wall)
-    @return new position, new velocity"""
-
+    # YOUR CODE HERE
+    # The distance between the point and the wall.
+    # The unit vector normal to the sloped wall.
+    # The normal element to the sloped wall of the velocity vector.
+    # Change the sign of the normal element of the velocity by subtracting doubled it.
+    # Reflect the normal element of the position by subtracting the doubled normal offset.
     return x_y, vx_vy
 
 
@@ -68,6 +66,7 @@ def outside_top_wall(x_y, y_height):
     @param y_height
     @return True/False"""
     # TODO return true if x_y is on the other side of the wall
+    # YOUR CODE HERE
     return False
 
 
@@ -77,6 +76,7 @@ def outside_left_wall(x_y, x_wall):
     @param x_wall
     @return True/False"""
     # TODO return true if x_y is on the other side of the wall
+    # YOUR CODE HERE
     return False
 
 
@@ -86,6 +86,7 @@ def outside_right_wall(x_y, x_wall):
     @param x_wall
     @return True/False"""
     # TODO return true if x_y is on the other side of the wall
+    # YOUR CODE HERE
     return False
 
 
@@ -97,6 +98,8 @@ def outside_right_wall(x_y, x_wall):
 # Define your own function here for calculating the intersection of the pinball with the bumper
 # For bumper_reflection function, call the reflect_wall function but calculate a_b_c of the tangent line of the bumper.
 
+# YOUR CODE HERE
+    # call reflect_wall (thought as the wall tangent to the bumper at the colliding point.)
 
 
 # TODO: Put routines to check answers here
@@ -104,3 +107,9 @@ if __name__ == '__main__':
     # walls: top, left, right
     walls = [5.0, -3.0, 3.0]
 
+    # YOUR CODE HERE
+    # Check the specialized functions
+    # Checks for top wall
+    # Left wall
+    # Right wall
+    # And last, but not least, the reflect function

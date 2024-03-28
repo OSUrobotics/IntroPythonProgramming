@@ -82,10 +82,15 @@ class Pinball:
 
         # TODO: Copy in your compute next step from pinball_routines. The only thing you should have to change is that
         #  you're now going to get delta t from self instead of passing it in
-        next_state = np.zeros(current_state.shape)
-        p = p + v * self.delta_t
+        result = np.zeros(current_state.shape)
+        # YOUR CODE HERE
+        # The new position (for both x and y) is just p + dt * v - current position + delta t * velocity
+        result[0, :] = current_state[0, :] + self.delta_t * current_state[1, :]   # Numpy arrays will handle doing both x and y
+        # The new velocity for x is the old velocity plus some of the acceleration
+        # result[1, :] = current_state[1, :] + (delta_t ** 2.0) * current_state[2, :] / 2.0
+        # Acceleration does not change
 
-        return next_state
+        return result
 
     def simulate_pinball(self, starting_state):
         """ Call compute one time step multiple times and store it in a numpy array
@@ -107,8 +112,6 @@ class Pinball:
         self.poses = []
         self.velocities = []
 
-        for obs in self.obstacles:
-            if objs ==
         # Use a while loop instead of the for loop
         # Set the stopping criteria based on current state y value
         # We know the first pose is the initial one
@@ -122,6 +125,14 @@ class Pinball:
             #         current_state[0, :] = np.array(pt_back).transpose()
             #         current_state[1, :] = np.array(vel_back).transpose()
 
+        # YOUR CODE HERE
+        # Starting poses
+        # Note the start from 1 - you already know what the values for 0 should be
+            # Make sure to use the last x,y values you just computed
+            # This should work, and will replace your if/then code for walls and bumpers, if your classes are
+            #   implemented correctly
+            # Put the new values into the numpy array
+        # All done - convert to a numpy array
         # It's ok to return the self results
         return self.poses, self.velocities
 
@@ -156,6 +167,8 @@ if __name__ == '__main__':
     #   walls or bumpers)
     #   Use: left -5.0, right 5.0, height 10.0, delta_t 0.01
 
+    # YOUR CODE HERE
+
     # Now run a simulation - here's the usual starting parameters
     starting_state = np.zeros([3, 2])  # location, velocity, acceleration
     starting_state[0, :] = [0, 0] # Start at zero, zero
@@ -165,6 +178,7 @@ if __name__ == '__main__':
 
 
     # Run the simulation
+    # YOUR CODE HERE
 
     # ... and plot the results
     pinball.plot_pinball_hw()

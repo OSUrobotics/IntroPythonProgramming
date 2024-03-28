@@ -2,6 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+# YOUR CODE HERE
 
 
 # ---------------------------- Class Example (walls) ---------------------------------
@@ -31,6 +32,7 @@ class PinballWall:
         #   ax + by + c format
         if wall_type == "Vertical":
             self.wall_type = "Vertical"
+            # YOUR CODE HERE
             if intercept_value is None:
                 raise ValueError("If vertical wall, need to specify intercept value")
             if intercept_value > 0:
@@ -39,6 +41,7 @@ class PinballWall:
                 self.abc = [-1.0, 0.0, intercept_value]
         elif wall_type == "Horizontal":
             self.wall_type = "Horizontal"
+            # YOUR CODE HERE
             if intercept_value is None:
                 raise ValueError("If horizontal wall, need to specify intercept value")
             if intercept_value > 0:
@@ -91,6 +94,15 @@ class PinballWall:
         #  Remember that you have what type of wall (vertical/horizontal) stored
         #  This should just be moving the code you did last week into this method
         #    pinball_routines inside/outside
+        # YOUR CODE HERE
+        # Rotation and translation that will bring the wall to be vertical and at x=0
+        ang = np.arctan2(b, a)   # normal of wall
+        # assert(np.isclose(dot_w_normal, 0.0))
+        # Matrix to take everything to the origin
+        # Rotate the current velocity vector and xy point by that matrix
+        # Now can just flip x for velocity and position
+        #   Should be, but just in case velocity has flipped already
+        # Rotate/translate back
         return x_y, vx_vy
 
     def __str__(self):
@@ -115,6 +127,7 @@ class PinballWall:
 
     def test_reflect(self):
         """ Put any tests for reflection here"""
+        # YOUR CODE HERE
         return True
 
     def plot(self, axs, left, right, height):
@@ -129,8 +142,20 @@ class PinballWall:
         # Plotting the general wall is optional
         #   Hint: get x values between the left and right walls, solve for y = (-ax -c)/b and keep only the points
         #    inside the box
+        # YOUR CODE HERE
 
 
 if __name__ == '__main__':
     # TODO Create instances and call test functions
-    pw = ...
+    # YOUR CODE HERE
+    # Now create two instances of the class
+    # Notice that we do NOT pass in a self variable
+    # Print them both - this will call the string function
+    # Check that we got the math right - should be 0 at 0.2, y for vertical wall
+    # Notice the use of my_vert_wall. to say which wall to use
+    #  this, essentially, is the same as calling
+    #        PinballWall.evaluate_halfplane(self=my_vert_wall, x_y=[0.2, 10.0])
+    # Check the other test functions
+    # A diagonal wall in the lower right corner
+    # One cool thing with encapsulating code in classes is you can do things like this - this calls origin_inside for
+    #   each instance of the class
