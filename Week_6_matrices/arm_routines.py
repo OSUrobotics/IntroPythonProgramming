@@ -220,11 +220,9 @@ def create_arm_geometry(base_size, link_sizes, palm_width, finger_size):
     return arm_geometry
 
 
+# ------------------ Any additional functions you want to write for both lab 6 and the homework------
+
 # YOUR CODE HERE
-# ------------------ Step 2: Build the pose matrix for each component -------------------------------------
-    #   Translate the base of the finger back to the origin, rotate it, then translate it back out
-    #   Reminder: The middle of the finger can be found using mt.get_dx_dy_from_matrix with the 'Matrix' key
-    #    Note: You want to move the base of the finger, NOT the middle, to the origin before you do the rotate
 
 
 # ----------------- Plotting routines --------------------------
