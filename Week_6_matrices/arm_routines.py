@@ -146,14 +146,13 @@ def matrix_shape_finger(finger_obj, palm_width, finger_size, b_is_top):
 def create_gripper(palm_width, finger_size):
     """ Make a gripper from a palm and two fingers
     Palm is centered on the x and y axis, base of finger will be at 0, 1/2 palm width
-    @param palm_and_fingers_list - the palm and two fingers, as a list with three dictionaries
     @param palm_width - the desired separation of the two fingers
     @param finger_size - how long and wide to make the finger
     @return the modified object"""
 
     # Make an object as a dictionary
     palm_obj = create_arm_component(name="Palm", pts=points_in_a_square(), color="tomato")
-    # Sets the Matrix_scale key
+    # Sets the matrix_shape key
     matrix_shape_palm(palm_obj, palm_width)
     # Keep this for later as a key
     palm_obj["Palm width"] = palm_width
@@ -167,7 +166,7 @@ def create_gripper(palm_width, finger_size):
     for b, tag, col in zip([True, False], ["Top", "Bottom"], ["darkgoldenrod", "darkgreen"]):   # top and bottom fingers
         # Create the finger from a wedge
         finger_obj = create_arm_component(name="Finger_" + tag, pts=points_in_a_wedge(), color=col)
-        # Sets the Matrix_scale key
+        # Sets the matrix_shape key
         matrix_shape_finger(finger_obj, palm_width, finger_size, b)
 
         # Keep this for later as a key
