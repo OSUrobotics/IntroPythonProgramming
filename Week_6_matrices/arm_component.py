@@ -28,7 +28,7 @@ class ArmComponent:
         n_points = pts.shape[1]
         self.pts = np.ones((3, n_points + 1))
         self.pts[0:2, 0:n_points] = pts[0:2, 0:n_points]
-        # Dupliczte teh last point
+        # Duplicate the last point
         self.pts[0:2, n_points] = pts[0:2, 0]
 
     # TODO: Copy in points_in_a_square as a static method
