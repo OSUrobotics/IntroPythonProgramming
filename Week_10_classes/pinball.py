@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# TAF4
 
 import numpy as np
 import matplotlib.pyplot as plt
