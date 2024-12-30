@@ -7,7 +7,8 @@ from matplotlib import pyplot as plt
 # --------------------------- Matrix routines -------------------------
 #
 # This will be our first example of making a .py file that is imported into the jupyter notebook/other .py file
-# This is so that the basic matrix functions - making matrices, checking them, plotting - can be in one place.
+# This is so that the basic matrix functions - making matrices, checking them, plotting - can be in one place,
+# the re-used in multiple places using "import". 
 #
 # The code is organized as
 #   Making scaling, rotation, translation matrices
@@ -29,11 +30,12 @@ def make_scale_matrix(scale_x=1.0, scale_y=1.0):
     @param scale_x - scale in x. Should NOT be 0.0
     @param scale_y - scale in y. Should NOT be 0.0
     @returns a 3x3 scaling matrix"""
+    # Throw an error if a zero scale
     if np.isclose(scale_x, 0.0) or np.isclose(scale_y, 0.0):
         raise ValueError(f"Scale values should be non_zero {scale_x}, {scale_y}")
 
     # Set the diagonal elements to the scale values
-    mat = np.identity(3)
+    mat = np.identity(3)   # Always use identity to make the initial 3x3 matrix
     mat[0, 0] = scale_x
     mat[1, 1] = scale_y
 
@@ -46,7 +48,7 @@ def make_translation_matrix(d_x=0.0, d_y=0.0):
     @param d_y - translate in y
     @returns a 3x3 translation matrix"""
 
-    # Set the last column to the amount to move
+    # Set the last column to be the amount to move
     mat = np.identity(3)
     mat[0, 2] = d_x
     mat[1, 2] = d_y
@@ -60,6 +62,7 @@ def make_rotation_matrix(theta=0.0):
     @param theta - rotate by theta (theta in radians)
     @returns a 3x3 rotation matrix"""
 
+    # If you multiply [x y 1]^t by the matrix, this is what you get
     # x rotated = cos(theta) * x - sin(theta) * y
     # y rotated = sin(theta) * x + cos(theta) * y
     mat = np.identity(3)
@@ -74,21 +77,22 @@ def make_rotation_matrix(theta=0.0):
 # ------------------------------- What kind of matrix is it? What does it do? -------------------------------------
 
 def get_dx_dy_from_matrix(mat):
-    """Where does the matrix translate 0,0 to?
+    """Where does the matrix translate 0, 0 to?
     @param mat - the matrix
     @returns dx, dy - the transformed point 0,0"""
 
-    # Don't forget to turn origin into a homogenous point...
+    # Create a point for the origin (0,0) ... don't forget that the 3rd component should be 1
     #   Multiply the origin by the matrix then return the x and y components
     # Reminder: @ is the matrix multiplication
     origin = np.zeros(shape=(3,))
     origin[2] = 1.0
 
-    xy_one = mat @ origin
-    return xy_one[0], xy_one[1]
+    xy_ret = mat @ origin
+    #  Ditch the 1 at the end and return a tuple (x,y)
+    return xy_ret[0], xy_ret[1]
 
 
-# Doing this one in two pieces - first, get out how the axes (1,0) and (0,1) are transformed, then in the mext
+# Doing this one in two pieces - first, get out how the axes (1,0) and (0,1) are transformed, then in the next
 #  method get theta out of how (1,0) is transformed
 def get_axes_from_matrix(mat):
     """Where does the matrix rotate (1,0) (0,1) to?
@@ -99,14 +103,16 @@ def get_axes_from_matrix(mat):
     #  1) Set x_axis to be a unit vector pointing down the x axis
     #  2) Set y_axis to be a unit vector pointing down the y axis
     #  Multiply by the matrix to get the new "x" and "y" axes
+    #    Reminder: zeros in the third row, not ones, because vectors can't translate
     x_axis = np.zeros(shape=(3,))
     y_axis = np.zeros(shape=(3,))
 
-    x_axis[0] = 1.0
-    y_axis[1] = 1.0
+    x_axis[0] = 1.0   # 1, 0, 0
+    y_axis[1] = 1.0   # 0, 1, 0
 
     x_axis_rotated = mat @ x_axis
     y_axis_rotated = mat @ y_axis
+    # Get out the first two values. This is a tuple with a 2 dimensional array for each vector
     return x_axis_rotated[0:2], y_axis_rotated[0:2]
 
 
@@ -119,7 +125,9 @@ def get_theta_from_matrix(mat):
     # Step 2) use arctan2 to turn the rotated x axis vector into an angle
     #   Use the x axis because theta for the x axis is 0 (makes the math easier)
     # Reminder: arctan2 takes (y, x)
-    x_axis_rotated, _ = get_axes_from_matrix(mat)
+    x_axis_rotated, _ = get_axes_from_matrix(mat)  # The _ says ignore the second returned vector
+
+    # arctan2 takes y, x and returns the angle in the range -pi to pi
     theta = np.arctan2(x_axis_rotated[1], x_axis_rotated[0])
     return theta
 
@@ -133,8 +141,11 @@ def plot_pts(axs, pts, fmt='-k'):
     @param fmt - optional format parameter"""
 
     # This gets the x values (in row 0) and the y values and just does a regular plot
+    #    
     axs.plot(pts[0, :], pts[1, :], fmt)
 
+    # We have to do this get the line to go from the last point to the first
+    #   (Not necessary if you duplicate the first point as the last point in pts)
     pts_close = np.zeros((2, 2))
     pts_close[:, 0] = pts[0:2, 0]
     pts_close[:, 1] = pts[0:2, -1]
@@ -168,25 +179,32 @@ def plot_transformed_axes(axs, mat):
     axs.arrow(x=origin_moved[0], y=origin_moved[1], dx=y_axis_moved[0], dy=y_axis_moved[1], color='blue', linestyle="--")
 
 
-def plot_axes_and_big_box(axs):
+def plot_axes_and_big_box(axs, box_size=5):
     """Plot the origin and x,y axes with a box at -5, -5 to 5, 5
     @param axs - figure axes"""
 
     # Put a black + at the origin
     axs.plot(0, 0, '+k')
+
+    arrow_length = 1.0
+    if box_size < 1.0:
+        arrow_length = box_size * 0.9
     # Draw one red arrow for the x axis (x,y, dx, dy)
-    axs.arrow(x=0, y=0, dx=1, dy=0, color='red')
+    axs.arrow(x=0, y=0, dx=arrow_length, dy=0, color='red')
     # Draw a blue arrow for the y axis
-    axs.arrow(x=0, y=0, dx=0, dy=1, color='blue')
+    axs.arrow(x=0, y=0, dx=0, dy=arrow_length, color='blue')
 
     # Draw a box around the world to make sure the plots stay the same size
-    axs.plot([-5, 5, 5, -5, -5], [-5, -5, 5, 5, -5], '-k')
+    axs.plot([-box_size, box_size, box_size, -box_size, -box_size], [-box_size, -box_size, box_size, box_size, -box_size], '-k')
 
     # This makes sure the x and y axes are scaled the same
     axs.axis('equal')
 
 
 
+""" Everything after __name__ is NOT imported when you import matrix_routines.py. However, if you run
+     this file - by using the triangle in the upper right - this code will get executed. It's usually used
+     to hold test code"""
 if __name__ == '__main__':
     # Create a matrix that has one of each type and call the plot code
     fig, axs = plt.subplots(1, 1, figsize=(6, 3))
@@ -210,6 +228,9 @@ if __name__ == '__main__':
 
     # Depending on if your mac, windows, linux, and if interactive is true, you may need to call this to get the plt
     # windows to show
+
     plt.show()
+
+    # If it exits on you then put a break point at the line below and run in the debugger
     print("Done")
 

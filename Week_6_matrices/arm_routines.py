@@ -7,6 +7,9 @@ import numpy as np
 # The matrix routines
 import matrix_routines as mt
 
+# The arm components
+from arm_component import ArmComponent
+
 
 # --------------------------- Forward kinematics ------------------
 # These are all of the routines needed for the lab and the homework in order to position the robot arm. The routines are
@@ -21,124 +24,6 @@ import matrix_routines as mt
 #    points of the shape, the matrix that takes the object to it's pose in space, the color)
 #
 #
-
-# From the lecture activity 
-def points_in_a_square():
-    """ Returns a 3x4 array of points in the shape of a square, from -1,1 to 1,1"""
-    pts_square = np.ones((3, 4))
-    # YOUR CODE HERE
-    return pts_square
-
-
-def points_in_a_wedge():
-    """ Returns a 3x4 array of points in the shape of a wedge, with the bottom at -1, -1 to 1, -1 and the top squished in"""
-    pts_wedge = np.ones((3, 4))
-    pts_wedge[0:2, 0] = [-1, -1]
-    pts_wedge[0:2, 1] = [ 1, -1.0]
-    pts_wedge[0:2, 2] = [ 0.8,  1.0]
-    pts_wedge[0:2, 3] = [-0.8,  1.0]
-    return pts_wedge
-
-
-def create_arm_component(name, pts, color="Grey"):
-    """ Create one of the components of the arm
-    @param name - name of the component (a string)
-    @param pts - the points to use - should be the points returend by one of points_in_a_square or points_in_a_wedge
-    @param color - color to draw the component in
-    @return a dictionary with identity matrices for shaping the points and positioning it"""
-
-    obj_dict = {
-        "Name": name,
-        "Pts": np.ones((3, 5)),
-        "Color": color,
-        "Angle": 0,
-        "Matrix_shape": np.identity(3),
-        "Matrix_pose": np.identity(3)
-    }
-    obj_dict["Pts"][0, 0:4] = pts[0, 0:4]
-    obj_dict["Pts"][1, 0:4] = pts[1, 0:4]
-    obj_dict["Pts"][0:2, 4] = pts[0:2, 0]
-
-    return obj_dict
-
-
-# ------------------ Make the geometry the right size/shape -------------------------------------
-# Use matrices to take two basic shapes (a square and a wedge) and re-shape them into the geometry for the arm, gripper.
-#
-# Yes, you could just create these basic shapes with the "correct" XYs, but we'll use a matrix to transform the
-# basic shape (square, wedge) to the correct size and shape.
-#
-# This is actually what most packages (eg, solidworks) do when you make a model. Each part of the model is defined
-# in a "canonical" location, then transformed to the desired position/scale/rotation using a matarix. This is
-# *before* calculating the matrix that positions the part based on the, eg, joint angles
-#
-# For all of these, you will be setting the Matrix_shape key in the object's dictionary
-def matrix_shape_base(base_obj, base_width=1.0, base_height=0.5):
-    """ Position and orient the base of the arm (the wedge-shape at the bottom)
-    Base middle should be at 0,0, wedge pointed up, base_width wide, base_height tall
-    @param base_obj - the dictionary for the base object
-    @param base_width - width of the base
-    @param base_height - height of the base"""
-
-    # TODO: create a matrix to get the wedge points into the right position/size
-    #  Scale first then then translate
-    # Reminder that the points of the wedge are defined above (in points_in_a_wedge)
-    # Reminder that the three matrix functions are as follows:
-    #    mt.make_scale_matrix(sx, sy)  rotation(theta) and translation(dx, dy)
-
-    # Change this so that this is the matrix to "shape" the object (not the identity)
-    base_obj["Matrix_shape"] = np.identity(3)
-    # YOUR CODE HERE
-
-
-def matrix_shape_link(link_obj, link_length, link_width):
-    """ This is one of the arm components - since they're all kinda the same (just different sizes) just have
-    one function to create them
-    The link should have the middle of the left hand side at 0,0 and extend along the x_axis by link_length
-    @param link_obj - the dictionary for the link
-    @param link_length - the desired length of the link
-    @param link_width - the desired height of the link"""
-
-    # TODO: create a matrix that puts the link into the right position/size/orientation
-    #  Reminder that squares are defined by -1,-1 to 1,1, and so currently have side lengths of 2...
-
-    # Change this so that this is the matrix to "shape" the object (not the identity)
-    link_obj["Matrix_shape"] = np.identity(3)
-    link_obj["Link_length"] = link_length
-    link_obj["link_width"] = link_width
-    # YOUR CODE HERE
-
-
-def matrix_shape_palm(palm_obj, palm_width):
-    """ This is palm of the gripper - a rectangle palm_width tall, centered at the origin, 1/10 as wide as it is tall
-    @param palm_obj - the dictionary for the palm
-    @param palm_width - the desired separation of the two fingers
-    @return the 3x3 matrix"""
-
-    # TODO: Calculate the scale matrix that makes the palm the correct size
-
-    # Change this so that this is the matrix to "shape" the object (not the identity)
-    palm_obj["Matrix_shape"] = np.identity(3)
-    # YOUR CODE HERE
-
-
-def matrix_shape_finger(finger_obj, palm_width, finger_size, b_is_top):
-    """ This is one of the fingers. Each finger is a wedges, separated by the palm width
-    @param finger_obj - the dictionary for the finger
-    @param palm_width - the desired separation of the two fingers
-    @param finger_size - tuple, how long and wide to make the finger
-    @param b_is_top - is this the top or the bottom finger?"""
-
-    # TODO [optional]: Calculate the transform to get it in the right position/size/orientation
-    #  b_is_top means it's the top finger...
-    #  If you don't do this part, the finger will just show up as a very, very small box in the middle of the palm
-    # Note 1: The base of the finger should be at 0, +- 0.5 * palm width, i.e,the base is in the middle of the palm rectangle in the x direction
-    # Note 2: This should be just a scale (make the finger the right size) followed by a translate - the fingers point up in the
-    #  default configuration
-    # TODO: If you are doing the optional finger placement, change this matrix
-    finger_obj["Matrix_shape"] = mt.make_scale_matrix(0.1 * finger_size[0], 0.1 * finger_size[1] / 2)
-    # YOUR CODE HERE
-
 
 # ------------------  Creating the list of dictionaries that are the arm components -------------------------------------
 # There are no TODOs within create_gripper and create_arm_geometry - the TODOs are all in the above functions
