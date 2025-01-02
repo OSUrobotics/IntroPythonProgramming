@@ -158,7 +158,8 @@ class ArmComponent:
         #   origin, rotate, then translate back. Where is the base? You can use get_dx_dy_from_matrix() in
         #   matrix_routines to get the point OR just store it in the class as a variable...
         #  NOTE: You'll need to figure out that this is a finger, and if it's the top or the bottom...
-        #   There are lots of ways to do this - don't forget you can add more variables in __init__
+        #   There are lots of ways to do this - don't forget you can add more variables in __init__.
+        #   You'll probably want to add something to matrix_shape_finger...
         pose_matrix = np.identity(3)   # fix this
         # YOUR CODE HERE
         # Call the set_pose_matrix method to actually save the matrix
@@ -269,7 +270,7 @@ if __name__ == '__main__':
     # Create the three components
     arm_component_palm = ArmComponent(name="Palm", color="tomato", shape_to_use="square")
     arm_component_finger_top = ArmComponent(name="Finger top", color="green", shape_to_use="wedge")
-    arm_component_finger_bot = ArmComponent(name="Finger bot", color="green", shape_to_use="wedge")
+    arm_component_finger_bot = ArmComponent(name="Finger bot", color="limegreen", shape_to_use="wedge")
 
     # Set the shape matrix
     arm_component_palm.matrix_shape_palm(palm_width=palm_width)
@@ -286,7 +287,7 @@ if __name__ == '__main__':
     assert np.all(np.isclose(arm_component_finger_bot.get_shape_matrix(), mat_finger_bot_check))
     print("Step 3c: gripper passed!")
 
-    fig, axs = plt.subplots(2, 4, figsize=(16, 4))
+    fig, axs = plt.subplots(2, 4, figsize=(12, 4))
 
     # STEP 4 check: The bottom row should have all the components rotated clockwise by pi/4
     box_sizes = [1.1, 1.0, 1.0, 0.2]
