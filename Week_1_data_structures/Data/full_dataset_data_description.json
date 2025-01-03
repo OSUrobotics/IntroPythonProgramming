@@ -1,0 +1,52 @@
+{
+  "data_channels": [
+    {
+      "name": "Timestamp",
+      "index_offset": 0,
+      "dimensions": 1,
+      "units": "milliseconds"
+    },
+    {
+      "name": "Right hand accelerometer",
+      "index_offset": 1,
+      "dimensions": 3,
+      "units": "gravity units"
+    },
+    {
+      "name": "Right hand gyroscope",
+      "index_offset": 4,
+      "dimensions": 3,
+      "units": "degrees/sec"
+    },
+    {
+      "name": "Left hand accelerometer",
+      "index_offset": 7,
+      "dimensions": 3,
+      "units": "gravity units"
+    },
+    {
+      "name": "Left hand gyroscope",
+      "index_offset": 10,
+      "dimensions": 3,
+      "units": "degrees/sec"
+    },
+    {
+      "name": "Subject number",
+      "index_offset": 13,
+      "dimensions": 1,
+      "units": "Number"
+    },
+    {
+      "name": "Run number",
+      "index_offset": 14,
+      "dimensions": 1,
+      "units": "Number"
+    },
+    {
+      "name": "Motion type",
+      "index_offset": 15,
+      "dimensions": 1,
+      "units": "motion id"
+    }
+  ]
+}
