@@ -5,7 +5,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# The matrix routines
+# The matrix routines. You must use these to build the matrices
 import matrix_routines as mt
 
 # Class that can handle creating shapes (square and wedge) and re-shaping those to be the arm components
@@ -44,14 +44,12 @@ class ArmComponent:
             print(f"Arm component: You asked for a shape {shape_to_use}, but I do not know that shape")
             pts = ArmComponent.points_in_a_square()
             
-        self.shape_name = shape_to_use
-        n_points = pts.shape[1]
         # make the pts variable for the class
+        n_points = pts.shape[1]  # n_points is NOT stored in the class - it will disappear when this function ends
         self.pts = np.ones((3, n_points + 1))
         self.pts[0:2, 0:n_points] = pts[0:2, 0:n_points]
-        # Dupliczte teh last point
+        # Duplicate the last point
         self.pts[0:2, n_points] = pts[0:2, 0]
-        # Put other variables here
 
         # TODO Step 2: create variables for the other things you might want to keep in an arm component
         #  You will need (at least)
@@ -73,8 +71,8 @@ class ArmComponent:
         pts_wedge = np.ones((3, 4))
         pts_wedge[0:2, 0] = [-1, -1]
         pts_wedge[0:2, 1] = [ 1, -1.0]
-        pts_wedge[0:2, 2] = [ 0.8,  1.0]
-        pts_wedge[0:2, 3] = [-0.8,  1.0]
+        pts_wedge[0:2, 2] = [ 0.8, 1.0]
+        pts_wedge[0:2, 3] = [-0.8, 1.0]
         return pts_wedge
 
     @staticmethod
@@ -98,17 +96,20 @@ class ArmComponent:
         # TODO STEP 2: Change this to return your pose matrix
         return ...
 
-    def matrix_shape_base(self, base_width=1.0, base_height=0.5):
+    def set_to_base_shape(self, base_width=1.0, base_height=0.5):
         """ Position and orient the base of the arm (the wedge-shape at the bottom)
         Base middle should be at 0,0, wedge pointed up, base_width wide, base_height tall
         @param base_width - width of the base
         @param base_height - height of the base"""
 
         # TODO STEP 3a: Copy the code from the lab question here, and set the matrix shape variable
+        # You must use the mt.make_scale_matrix etc from matrix_routines.py to build the matrix from scales, rotations and
+        #   translations - do NOT just make a numpy array
+        # Don't forget you can save the base_width and base_height values here by doing, eg, self.blah = base_width
         # YOUR CODE HERE
         ... # Replace with real code
 
-    def matrix_shape_link(self, link_length, link_width):
+    def set_to_link_shape(self, link_length, link_width):
         """ This is one of the arm components - since they're all kinda the same (just different sizes) just have
         one function to create them
         The link should have the middle of the left hand side at 0,0 and extend along the x_axis by link_length
@@ -116,21 +117,26 @@ class ArmComponent:
         @param link_width - the desired height of the link"""
 
         # TODO STEP 3b: Make the link shape matrix 
+        # You must use the mt.make_scale_matrix etc from matrix_routines.py to build the matrix from scales, rotations and
+        #   translations - do NOT just make a numpy array
+        # Don't forget you can save the link length here by doing, eg, self.blah = link_length
         # YOUR CODE HERE
         ... # Replace with real code
 
-    def matrix_shape_palm(self, palm_width):
+    def set_to_palm_shape(self, palm_width):
         """ This is palm of the gripper - a rectangle palm_width tall, centered at the origin, 1/10 as wide as it is tall
         @param palm_width - the desired separation of the two fingers
         @return the 3x3 matrix"""
 
         # TODO STEP 3c: Make the palm shape matrix
+        # You must use the mt.make_scale_matrix etc from matrix_routines.py to build the matrix from scales, rotations and
+        #   translations - do NOT just make a numpy array
         # YOUR CODE HERE
         ... # Replace with real code
 
-    def matrix_shape_finger(self, palm_width, finger_length, finger_width, b_is_top):
+    def set_to_finger_shape(self, palm_width, finger_length, finger_width, b_is_top):
         """ This is one of the fingers. Each finger is a wedge, separated by the palm width
-        The base of the finger is the bottom of the wedge; it tapers toward the finger timp
+        The base of the finger is the bottom of the wedge; it tapers toward the finger tip
         The fingers point to the right with the base at 0, +- palm_width / 2
         @param palm_width - the desired separation of the two fingers
         @param finger_length - how long to make the finger
@@ -138,6 +144,8 @@ class ArmComponent:
         @param b_is_top - is this the top or the bottom finger?"""
 
         # TODO STEP 3c: Make the finger shape matrix
+        # You must use the mt.make_scale_matrix etc from matrix_routines.py to build the matrix from scales, rotations and
+        #   translations - do NOT just make a numpy array
         # YOUR CODE HERE
         ... # Replace with real code
 
@@ -145,7 +153,7 @@ class ArmComponent:
         """Set the pose matrix to the given one
         @param pose_matrix - a 3x3 matrix that positions the arm
         """
-        # TODO Step 4: set your matrix here
+        # TODO Step 4: set your pose matrix here
         # YOUR CODE HERE
         ... # Replace with real code
 
@@ -159,16 +167,18 @@ class ArmComponent:
         #   matrix_routines to get the point OR just store it in the class as a variable...
         #  NOTE: You'll need to figure out that this is a finger, and if it's the top or the bottom...
         #   There are lots of ways to do this - don't forget you can add more variables in __init__.
-        #   You'll probably want to add something to matrix_shape_finger...
+        #   You'll probably want to add something to set_to_finger_shape...
+        #  Again, use the mt.make_xx_matrix routines, don't just make an array
         pose_matrix = np.identity(3)   # fix this
         # YOUR CODE HERE
         # Call the set_pose_matrix method to actually save the matrix
         self.set_pose_matrix(pose_matrix=pose_matrix)
 
     def plot(self, axs, b_do_pose_matrix=False):
-        """Plot the object in the world by applying Matrix_shape then Matrix_pose (if in_b_do_pose_matrix is True)
+        """Plot the object in the world by applying the matrix returned by get_shape_matrix() then 
+           the matrix returned by get_shape_matrix() (if in_b_do_pose_matrix is True)
         @param axs - the axes of the figure to plot in
-        @param b_do_pose_matrix - if True, do Matrix_pose @ Matrix_shape, otherwise, just do Matrix_shape"""
+        @param b_do_pose_matrix - if True, do get_shape_matrix() @ get_shape_matrix(), otherwise, just do get_shape_matrix()"""
 
         # Plot with only the shape matrix
         plot_matrix = self.get_shape_matrix()
@@ -198,14 +208,14 @@ class ArmComponent:
         https://www.digitalocean.com/community/tutorials/python-str-repr-functions for more information on this method; 
         TLDR: you can do print(class instance name)
         @returns string"""
-        str_out = f"Class name: {self.name}, color: {self.color}, shape: {self.shape_name}\n"
+        str_out = f"Class name: {self.name}, color: {self.color}\n"
 
         # See, for example, https://www.geeksforgeeks.org/how-to-get-a-list-of-class-attributes-in-python/
         #   Since classes are (more or less) dictionaries with variables and method, we just have to list them...
         # Print matrices with 4 decimal places
         np.set_printoptions(formatter={'float': lambda x: "{0:0.6f}".format(x)})
         for k, v in self.__dict__.items():
-            if not (k == "name" or k == "color" or k == "shape_name"):
+            if not (k == "name" or k == "color"):
                 if isinstance(v, np.ndarray):
                     str_out = str_out + f"Key: {k}, Value:\n{v}\n"
                 else:
@@ -227,7 +237,6 @@ if __name__ == '__main__':
 
     assert arm_component_blank.name == "check_name"
     assert arm_component_blank.color == "Grey"
-    assert arm_component_blank.shape_name == "wedge"
 
     # Check that returning a 3x3 identity matrix
     mat_shape = arm_component_blank.get_shape_matrix()
@@ -238,6 +247,7 @@ if __name__ == '__main__':
 
     print("Your arm component is:")
     print(arm_component_blank)   # Yes, printing works (see __str__ method above)
+    assert arm_component_blank.band_name != ""   # See instructions in JN
     print("Step 2: Init passed!")
 
     # STEP 3a: Check that the base matrix is correct
@@ -245,7 +255,7 @@ if __name__ == '__main__':
     base_height = 0.5
     mat_base_check = np.array([[0.5, 0.0, 0], [0.0, 0.25, 0.25], [0.0, 0.0, 1.0]])
     arm_component_base = ArmComponent(name="Base", color="black", shape_to_use="wedge")
-    arm_component_base.matrix_shape_base(base_width=base_width, base_height=base_height)
+    arm_component_base.set_to_base_shape(base_width=base_width, base_height=base_height)
 
     assert np.all(np.isclose(arm_component_base.get_shape_matrix(), mat_base_check))        
     print("Step 3a: base passed!")
@@ -256,7 +266,7 @@ if __name__ == '__main__':
     link1_width = 0.25
     mat_link1_check = np.array([[0.25, 0.0, 0.25], [0.0, 0.125, 0.0], [0.0, 0.0, 1.0]])
     arm_component_link1 = ArmComponent(name="Link1", color="blue", shape_to_use="square")
-    arm_component_link1.matrix_shape_link(link_length=link1_length, link_width=link1_width)
+    arm_component_link1.set_to_link_shape(link_length=link1_length, link_width=link1_width)
 
     assert np.all(np.isclose(arm_component_link1.get_shape_matrix(), mat_link1_check))
     print("Step 3b: link passed!")
@@ -273,9 +283,9 @@ if __name__ == '__main__':
     arm_component_finger_bot = ArmComponent(name="Finger bot", color="limegreen", shape_to_use="wedge")
 
     # Set the shape matrix
-    arm_component_palm.matrix_shape_palm(palm_width=palm_width)
-    arm_component_finger_top.matrix_shape_finger(palm_width=palm_width, finger_length=finger_length, finger_width=finger_width, b_is_top=True)
-    arm_component_finger_bot.matrix_shape_finger(palm_width=palm_width, finger_length=finger_length, finger_width=finger_width, b_is_top=False)
+    arm_component_palm.set_to_palm_shape(palm_width=palm_width)
+    arm_component_finger_top.set_to_finger_shape(palm_width=palm_width, finger_length=finger_length, finger_width=finger_width, b_is_top=True)
+    arm_component_finger_bot.set_to_finger_shape(palm_width=palm_width, finger_length=finger_length, finger_width=finger_width, b_is_top=False)
 
     # Check matrices
     mat_palm_check = np.array([[0.005, 0.0, 0.0], [0.0, 0.05, 0.0], [0.0, 0.0, 1.0]])
