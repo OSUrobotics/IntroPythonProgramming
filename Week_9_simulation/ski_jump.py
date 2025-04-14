@@ -167,6 +167,13 @@ class GroundSection:
         @param x - x value
         @returns height f(x)"""
         # YOUR CODE HERE
+    
+    def is_over(self, x, y):
+        """ Is the x,y point over the segment? 
+        @param x - the x position
+        @param y - the y position
+        @ return True or False
+        """
         # YOUR CODE HERE
     
     def is_on(self, x, y, eps=0.01):
