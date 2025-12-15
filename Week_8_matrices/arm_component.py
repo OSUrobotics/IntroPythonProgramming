@@ -79,7 +79,7 @@ class ArmComponent:
     def points_in_a_square():
         """ Returns a 3x4 array of points in the shape of a square, from -1,1 to 1,1"""
         # TODO STEP 1: Take your pts_square = ... code from the lecture activity and copy it in here.
-        #  Make sure it's indented at this leve
+        #  Make sure it's indented at this level
         #  Add a return statement at the end
         #  If you're confused, look at points_in_a_wedge, above
         # YOUR CODE HERE
