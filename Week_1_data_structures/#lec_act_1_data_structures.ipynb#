@@ -52,7 +52,7 @@
     "# Access all numpy functions as np.\n",
     "import numpy as np\n",
     "\n",
-    "# Note, if this fails try running week_0_python/a_start_here_libraries.ipynb first\n",
+ o   "# Note, if this fails try running week_0_python/a_start_here_libraries.ipynb first\n",
     "#  If you've done that, then make sure that the kernel you've selected for both is the same\n",
     "#  If that doesn't work, find a TA."
    ]

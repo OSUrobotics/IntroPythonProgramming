@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# 2U5
+# W26
 
 # The usual imports
 import numpy as np
@@ -26,7 +26,7 @@ class ArmComponent:
              @param color - what color to draw the shape in 
              @param shape_to_use - one of "square" or "wedge"
              @returns None"""
-        # TODO 
+        # GUIDE 
         #   Create all of the variables an arm component needs. I've done the first few for you.
         #   Notice the self. - this says store that data here. 
         #    NOTE: self.name is NOT the same as name - name is the input variable, self.name is a variable "name"
@@ -51,7 +51,7 @@ class ArmComponent:
         # Duplicate the last point
         self.pts[0:2, n_points] = pts[0:2, 0]
 
-        # TODO Step 2: create variables for the other things you might want to keep in an arm component
+        # GUIDE Step 2: create variables for the other things you might want to keep in an arm component
         #  You will need (at least)
         #     A 3x3 matrix for shaping the square/wedge (this is mat_shape_square_* from the lecture activity)
         #     A 3x3 matrix for rotating/translating the shape based on the current angle (this is the mat_pose_* from
@@ -59,7 +59,7 @@ class ArmComponent:
         #  You will might also want to save length and width and current angle
         #  For each variable, define a default value (eg, self.angle = 0.0). For any matrix, set it to be the identity
         #    Why isn't there a length/width input? We'll set those later in the make_shape_* methods
-        # TODO Step 2: Make sure you change get_shape_matrix and get_pose_matrix to return the matrices you create
+        # GUIDE Step 2: Make sure you change get_shape_matrix and get_pose_matrix to return the matrices you create
         # YOUR CODE HERE
 
 
@@ -78,7 +78,7 @@ class ArmComponent:
     @staticmethod
     def points_in_a_square():
         """ Returns a 3x4 array of points in the shape of a square, from -1,1 to 1,1"""
-        # TODO STEP 1: Take your pts_square = ... code from the lecture activity and copy it in here.
+        # GUIDE STEP 1: Take your pts_square = ... code from the lecture activity and copy it in here.
         #  Make sure it's indented at this level
         #  Add a return statement at the end
         #  If you're confused, look at points_in_a_wedge, above
@@ -87,13 +87,13 @@ class ArmComponent:
     def get_shape_matrix(self):
         """ Return the shape matrix"""
         # YOUR CODE HERE
-        # TODO STEP 2: Change this to return your shape matrix
+        # GUIDE STEP 2: Change this to return your shape matrix
         return ...
     
     def get_pose_matrix(self):
         """ Return the pose matrix"""
         # YOUR CODE HERE
-        # TODO STEP 2: Change this to return your pose matrix
+        # GUIDE STEP 2: Change this to return your pose matrix
         return ...
 
     def set_to_base_shape(self, base_width=1.0, base_height=0.5):
@@ -102,7 +102,7 @@ class ArmComponent:
         @param base_width - width of the base
         @param base_height - height of the base"""
 
-        # TODO STEP 3a: Copy the code from the lab question here, and set the matrix shape variable
+        # GUIDE STEP 3a: Copy the code from the lab question here, and set the matrix shape variable
         # You must use the mt.make_scale_matrix etc from matrix_routines.py to build the matrix from scales, rotations and
         #   translations - do NOT just make a numpy array
         # Don't forget you can save the base_width and base_height values here by doing, eg, self.blah = base_width
@@ -116,7 +116,7 @@ class ArmComponent:
         @param link_length - the desired length of the link
         @param link_width - the desired height of the link"""
 
-        # TODO STEP 3b: Make the link shape matrix 
+        # GUIDE STEP 3b: Make the link shape matrix 
         # You must use the mt.make_scale_matrix etc from matrix_routines.py to build the matrix from scales, rotations and
         #   translations - do NOT just make a numpy array
         # Don't forget you can save the link length here by doing, eg, self.blah = link_length
@@ -128,7 +128,7 @@ class ArmComponent:
         @param palm_width - the desired separation of the two fingers
         @return the 3x3 matrix"""
 
-        # TODO STEP 3c: Make the palm shape matrix
+        # GUIDE STEP 3c: Make the palm shape matrix
         # You must use the mt.make_scale_matrix etc from matrix_routines.py to build the matrix from scales, rotations and
         #   translations - do NOT just make a numpy array
         # YOUR CODE HERE
@@ -143,7 +143,7 @@ class ArmComponent:
         @param finger_width - how wide to make the finger
         @param b_is_top - is this the top or the bottom finger?"""
 
-        # TODO STEP 3c: Make the finger shape matrix
+        # GUIDE STEP 3c: Make the finger shape matrix
         # You must use the mt.make_scale_matrix etc from matrix_routines.py to build the matrix from scales, rotations and
         #   translations - do NOT just make a numpy array
         # YOUR CODE HERE
@@ -153,7 +153,7 @@ class ArmComponent:
         """Set the pose matrix to the given one
         @param pose_matrix - a 3x3 matrix that positions the arm
         """
-        # TODO Step 4: set your pose matrix here
+        # GUIDE Step 4: set your pose matrix here
         # YOUR CODE HERE
         ... # Replace with real code
 
@@ -161,7 +161,7 @@ class ArmComponent:
         """ Set the pose matrix for the component
         @param rot_amt - how much to rotate by"""
 
-        # TODO Step 4: Set your pose matrix to be a rotation by the given amount
+        # GUIDE Step 4: Set your pose matrix to be a rotation by the given amount
         # Optional: If this is a finger then rotate the finger properly. Translate the base to the
         #   origin, rotate, then translate back. Where is the base? You can use get_dx_dy_from_matrix() in
         #   matrix_routines to get the point OR just store it in the class as a variable...

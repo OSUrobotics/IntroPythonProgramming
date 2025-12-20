@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# 2U5
+# W26
 
 import numpy as np
 from matplotlib import pyplot as plt
