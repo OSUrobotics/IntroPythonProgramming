@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 # The matrix routines. You must use these to build the matrices
 import matrix_routines as mt
 
-# Class that can handle creating shapes (square and wedge) and re-shaping those to be the arm components
+# Class that can handle creating shapes (square and wedge) and re-shaping those to be the arm components (links and base)
 #   For this assignment we're going to treat a class as basically a glorified dictionary.
 #   1) Instead of doing, eg, dict["my_key"] = 3, we will do self.my_key = 3. 
 #   2) Each function is now inside of the class (indented once) and the first parameter of most functions is "self"
@@ -22,7 +22,6 @@ class ArmComponent:
         """ Initialize the arm component with the parts every link needs; the actual matrices will be
               Created in the make_shape_* methods below
              @param name - name for the shape
-             @param pts - the points (either wedge or square) to use for the shape
              @param color - what color to draw the shape in 
              @param shape_to_use - one of "square" or "wedge"
              @returns None"""
@@ -36,6 +35,7 @@ class ArmComponent:
 
         # Points - one of the nice things about using a class is you can do some "fancy" initialization. In
         #  this case we're going to duplicate the last point in pts and make sure we have a 3xn+1 matrix
+        # First we get the points using the points_in_a_* methods
         if shape_to_use == "square":
             pts = ArmComponent.points_in_a_square()
         elif shape_to_use == "wedge":
@@ -56,7 +56,7 @@ class ArmComponent:
         #     A 3x3 matrix for shaping the square/wedge (this is mat_shape_square_* from the lecture activity)
         #     A 3x3 matrix for rotating/translating the shape based on the current angle (this is the mat_pose_* from
         #           the lecture activity)
-        #  You will might also want to save length and width and current angle
+        #  You might also want to save length and width and current angle
         #  For each variable, define a default value (eg, self.angle = 0.0). For any matrix, set it to be the identity
         #    Why isn't there a length/width input? We'll set those later in the make_shape_* methods
         # GUIDES Step 2: Make sure you change get_shape_matrix and get_pose_matrix to return the matrices you create
@@ -113,47 +113,13 @@ class ArmComponent:
         """ This is one of the arm components - since they're all kinda the same (just different sizes) just have
         one function to create them
         The link should have the middle of the left hand side at 0,0 and extend along the x_axis by link_length
-        @param link_length - the desired length of the link
-        @param link_width - the desired height of the link"""
+        @param link_length - the desired length of the link (extension along x_axis)
+        @param link_width - the desired height of the link (extension along y_axis)"""
 
         # GUIDES STEP 3b: Make the link shape matrix 
         # You must use the mt.make_scale_matrix etc from matrix_routines.py to build the matrix from scales, rotations and
         #   translations - do NOT just make a numpy array
         # Don't forget you can save the link length here by doing, eg, self.blah = link_length
-        # YOUR CODE HERE
-        ... # Replace with actual code
-
-    def set_to_palm_shape(self, palm_width):
-        """ This is palm of the gripper - a rectangle palm_width tall, centered at the origin, 1/10 as wide as it is tall
-        @param palm_width - the desired separation of the two fingers
-        @return the 3x3 matrix"""
-
-        # GUIDES STEP 3c: Make the palm shape matrix
-        # You must use the mt.make_scale_matrix etc from matrix_routines.py to build the matrix from scales, rotations and
-        #   translations - do NOT just make a numpy array
-        # YOUR CODE HERE
-        ... # Replace with actual code
-
-    def set_to_finger_shape(self, palm_width, finger_length, finger_width, b_is_top):
-        """ This is one of the fingers. Each finger is a wedge, separated by the palm width
-        The base of the finger is the bottom of the wedge; it tapers toward the finger tip
-        The fingers point to the right with the base at 0, +- palm_width / 2
-        @param palm_width - the desired separation of the two fingers
-        @param finger_length - how long to make the finger
-        @param finger_width - how wide to make the finger
-        @param b_is_top - is this the top or the bottom finger?"""
-
-        # GUIDES STEP 3c: Make the finger shape matrix
-        # You must use the mt.make_scale_matrix etc from matrix_routines.py to build the matrix from scales, rotations and
-        #   translations - do NOT just make a numpy array
-        # YOUR CODE HERE
-        ... # Replace with actual code
-
-    def set_pose_matrix(self, pose_matrix):
-        """Set the pose matrix to the given one
-        @param pose_matrix - a 3x3 matrix that positions the arm
-        """
-        # GUIDES Step 4: set your pose matrix here
         # YOUR CODE HERE
         ... # Replace with actual code
 
@@ -169,14 +135,12 @@ class ArmComponent:
         #   There are lots of ways to do this - don't forget you can add more variables in __init__.
         #   You'll probably want to add something to set_to_finger_shape...
         #  Again, use the mt.make_xx_matrix routines, don't just make an array
-        pose_matrix = np.identity(3)   # fix this
+        pose_matrix = np.identity(3)   # fix this to set your self.xxx variable that stores the pose
         # YOUR CODE HERE
-        # Call the set_pose_matrix method to actually save the matrix
-        self.set_pose_matrix(pose_matrix=pose_matrix)
 
     def plot(self, axs, b_do_pose_matrix=False):
         """Plot the object in the world by applying the matrix returned by get_shape_matrix() then 
-           the matrix returned by get_shape_matrix() (if in_b_do_pose_matrix is True)
+           the matrix returned by get_pose_matrix() (if in_b_do_pose_matrix is True)
         @param axs - the axes of the figure to plot in
         @param b_do_pose_matrix - if True, do get_shape_matrix() @ get_shape_matrix(), otherwise, just do get_shape_matrix()"""
 
@@ -271,50 +235,18 @@ if __name__ == '__main__':
     assert np.all(np.isclose(arm_component_link1.get_shape_matrix(), mat_link1_check))
     print("Step 3b: link passed!")
 
-    # STEP 3c: Check that the gripper
-    # The sizes for all of the components
-    palm_width = 0.1
-    finger_length = 0.075
-    finger_width = 0.025
-
-    # Create the three components
-    arm_component_palm = ArmComponent(name="Palm", color="tomato", shape_to_use="square")
-    arm_component_finger_top = ArmComponent(name="Finger top", color="green", shape_to_use="wedge")
-    arm_component_finger_bot = ArmComponent(name="Finger bot", color="limegreen", shape_to_use="wedge")
-
-    # Set the shape matrix
-    arm_component_palm.set_to_palm_shape(palm_width=palm_width)
-    arm_component_finger_top.set_to_finger_shape(palm_width=palm_width, finger_length=finger_length, finger_width=finger_width, b_is_top=True)
-    arm_component_finger_bot.set_to_finger_shape(palm_width=palm_width, finger_length=finger_length, finger_width=finger_width, b_is_top=False)
-
-    # Check matrices
-    mat_palm_check = np.array([[0.005, 0.0, 0.0], [0.0, 0.05, 0.0], [0.0, 0.0, 1.0]])
-    mat_finger_top_check = np.array([[0.0, 0.0375, 0.0375], [-0.0125, 0.0, 0.05], [0.0, 0.0, 1.0]])
-    mat_finger_bot_check = np.array([[0.0, 0.0375, 0.0375], [-0.0125, 0.0, -0.05], [0.0, 0.0, 1.0]])
-
-    assert np.all(np.isclose(arm_component_palm.get_shape_matrix(), mat_palm_check))
-    assert np.all(np.isclose(arm_component_finger_top.get_shape_matrix(), mat_finger_top_check))
-    assert np.all(np.isclose(arm_component_finger_bot.get_shape_matrix(), mat_finger_bot_check))
-    print("Step 3c: gripper passed!")
-
-    fig, axs = plt.subplots(2, 4, figsize=(12, 4))
+    fig, axs = plt.subplots(2, 3, figsize=(9, 4))
 
     # STEP 4 check: The bottom row should have all the components rotated clockwise by pi/4
     box_sizes = [1.1, 1.0, 1.0, 0.2]
     for irow, b_plot in enumerate((False, True)):
-        for i, ac in enumerate((arm_component_blank, arm_component_base, arm_component_link1, arm_component_palm)):
+        for i, ac in enumerate((arm_component_blank, arm_component_base, arm_component_link1)):
             mt.plot_axes_and_big_box(axs[irow, i], box_size=box_sizes[i])
             ac.plot(axs[irow, i], b_do_pose_matrix=b_plot)
             axs[irow, i].set_title(ac.name)
 
             # Do rotation
             ac.set_pose_rotation(-np.pi/4)
-
-        for ac in (arm_component_finger_top, arm_component_finger_bot):
-            ac.plot(axs[irow, -1], b_do_pose_matrix=b_plot)
-            ac.set_pose_rotation(-np.pi/4)
-
-        axs[irow, -1].set_title("gripper")        
 
     fig.tight_layout()
     plt.show()

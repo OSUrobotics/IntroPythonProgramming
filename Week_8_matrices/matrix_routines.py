@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 
 # --------------------------- Matrix routines -------------------------
 #
-# This will be our first example of making a .py file that is imported into the jupyter notebook/other .py file
+# This will be our first example of making a .py file that is imported into the jupyter notebook. 
 # This is so that the basic matrix functions - making matrices, checking them, plotting - can be in one place,
 # the re-used in multiple places using "import". 
 #
@@ -20,12 +20,12 @@ from matplotlib import pyplot as plt
 #  you would never write these (numpy has versions of them - in particular, use scipy's rotation/quaternion class to handle
 #  rotations in 3D)
 #
-# A reminder that all matrices are 3x3 (even though we are in 2d) so that we can do translations (the upper left is the 2x2 matrix)
+# A reminder that all matrices are 3x3 (even though we are in 2d) so that we can do translations (see lecture slides)
 
 # Lecture slides: https://docs.google.com/presentation/d/12p3VOVT5yL14-1z5T20hTscpVC0hsxjtvMLHmQLFITk/edit?usp=sharing
 
 # -------------------- Creating specific types of matrices ---------------------
-def make_scale_matrix(scale_x=1.0, scale_y=1.0):
+def make_scale_matrix(scale_x:float=1.0, scale_y:float=1.0)->np.array:
     """Create a 3x3 scaling matrix
     @param scale_x - scale in x. Should NOT be 0.0
     @param scale_y - scale in y. Should NOT be 0.0
@@ -42,7 +42,7 @@ def make_scale_matrix(scale_x=1.0, scale_y=1.0):
     return mat
 
 
-def make_translation_matrix(d_x=0.0, d_y=0.0):
+def make_translation_matrix(d_x:float=0.0, d_y:float=0.0)->np.array:
     """Create a 3x3 translation matrix that moves by dx, dy
     @param d_x - translate in x
     @param d_y - translate in y
@@ -56,10 +56,10 @@ def make_translation_matrix(d_x=0.0, d_y=0.0):
     return mat
 
 
-def make_rotation_matrix(theta=0.0):
+def make_rotation_matrix(theta:float=0.0)->np.array:
     """Create a 3x3 rotation matrix that rotates counter clockwise by theta
     Note that it is convention to rotate counter clockwise - there's no mathematical reason for it
-    @param theta - rotate by theta (theta in radians)
+    @param theta - rotate by theta (theta in radians, NOT degrees)
     @returns a 3x3 rotation matrix"""
 
     # If you multiply [x y 1]^t by the matrix, this is what you get
@@ -76,7 +76,7 @@ def make_rotation_matrix(theta=0.0):
 
 # ------------------------------- What kind of matrix is it? What does it do? -------------------------------------
 
-def get_dx_dy_from_matrix(mat):
+def get_dx_dy_from_matrix(mat: np.array)->tuple:
     """Where does the matrix translate 0, 0 to?
     @param mat - the matrix
     @returns dx, dy - the transformed point 0,0"""
@@ -84,7 +84,7 @@ def get_dx_dy_from_matrix(mat):
     # Create a point for the origin (0,0) ... don't forget that the 3rd component should be 1
     #   Multiply the origin by the matrix then return the x and y components
     # Reminder: @ is the matrix multiplication
-    origin = np.zeros(shape=(3,))
+    origin = np.zeros(shape=(3,))  # Need the , in the shape to make this be a 3x1 matrix
     origin[2] = 1.0
 
     xy_ret = mat @ origin
@@ -94,7 +94,7 @@ def get_dx_dy_from_matrix(mat):
 
 # Doing this one in two pieces - first, get out how the axes (1,0) and (0,1) are transformed, then in the next
 #  method get theta out of how (1,0) is transformed
-def get_axes_from_matrix(mat):
+def get_axes_from_matrix(mat: np.array)->tuple:
     """Where does the matrix rotate (1,0) (0,1) to?
     @param mat - the matrix
     @returns x_rotated_axis, y_rotated_axis - the transformed vectors"""
@@ -116,7 +116,7 @@ def get_axes_from_matrix(mat):
     return x_axis_rotated[0:2], y_axis_rotated[0:2]
 
 
-def get_theta_from_matrix(mat):
+def get_theta_from_matrix(mat: np.array)->float:
     """ Get the actual rotation angle from how the x-axis transforms
     @param mat - the matrix
     @return theta, the rotation amount in radians"""
@@ -133,27 +133,28 @@ def get_theta_from_matrix(mat):
 
 
 # ------------------------------- Plot code -------------------------------------
-# Note - these are the same as the ones in tutorial/practice
-def plot_pts(axs, pts, fmt='-k'):
+# Note - this is the same plotting code from the tutorial/practice
+def plot_pts(axs, pts:np.array, fmt:str='-k'):
     """ plot the points in the window
-    @param axs - the window to draw into
+    @param axs - the figure axes to draw into
     @param pts - the 3xn array of points
     @param fmt - optional format parameter"""
 
     # This gets the x values (in row 0) and the y values and just does a regular plot
-    #    
     axs.plot(pts[0, :], pts[1, :], fmt)
 
     # We have to do this get the line to go from the last point to the first
     #   (Not necessary if you duplicate the first point as the last point in pts)
-    pts_close = np.zeros((2, 2))
-    pts_close[:, 0] = pts[0:2, 0]
-    pts_close[:, 1] = pts[0:2, -1]
+    pts_closed = np.zeros((2, 2))
+    pts_closed[:, 0] = pts[0:2, 0]
+    pts_closed[:, 1] = pts[0:2, -1]
     # and close the polygon
-    axs.plot(pts_close[0, :], pts_close[1, :], fmt)
+    axs.plot(pts_closed[0, :], pts_closed[1, :], fmt)
 
+    # This makes sure the x and y axes are scaled the same
+    axs.axis('equal')
 
-def plot_transformed_axes(axs, mat):
+def plot_transformed_axes(axs, mat:np.array):
     """Plot where the coordinate system (0,0 and x,y axes) goes to when transformed by mat
     @param axs - figure axes
     @param mat - the matrix"""
@@ -178,6 +179,8 @@ def plot_transformed_axes(axs, mat):
     # Draw a blue arrow for the y axis
     axs.arrow(x=origin_moved[0], y=origin_moved[1], dx=y_axis_moved[0], dy=y_axis_moved[1], color='blue', linestyle="--")
 
+    # This makes sure the x and y axes are scaled the same
+    axs.axis('equal')
 
 def plot_axes_and_big_box(axs, box_size=5):
     """Plot the origin and x,y axes with a box at -5, -5 to 5, 5
@@ -203,7 +206,7 @@ def plot_axes_and_big_box(axs, box_size=5):
 
 
 """ Everything after __name__ is NOT imported when you import matrix_routines.py. However, if you run
-     this file - by using the triangle in the upper right - this code will get executed. It's usually used
+     this file - by using the triangle in the upper right of VSCode - this code will get executed. It's usually used
      to hold test code"""
 if __name__ == '__main__':
     # Create a matrix that has one of each type and call the plot code
