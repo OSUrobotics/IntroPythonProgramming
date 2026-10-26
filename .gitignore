@@ -3,6 +3,8 @@
 .ipynb_checkpoints
 .conda
 
+*_source.json
+
 /Skills/zips/
 /Shell_code_ROS/.idea/
 
